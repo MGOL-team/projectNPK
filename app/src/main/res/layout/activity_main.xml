@@ -12,6 +12,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="if you see it, there is some problems"
+
         android:textSize="24sp"
         android:id="@+id/text_login_name"
         android:paddingLeft="30sp"
