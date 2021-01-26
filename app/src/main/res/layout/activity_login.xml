@@ -8,7 +8,6 @@
     android:orientation="vertical"
     >
 
-
     <EditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
