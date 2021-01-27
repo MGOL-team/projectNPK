@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class Database {
 
-    //DatabaseReference myPef;
+    MainActivity mainActivity;
 
     private final Map<String, List<String>> allDataMap;
 
@@ -23,7 +23,8 @@ public class Database {
         allDataMap.put("rating", new ArrayList<>());
     }
 
-    public Database (DatabaseReference myRef) {
+    public Database (DatabaseReference myRef, MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
         allDataMap = new HashMap<>();
 
         initializeListsOfMaps();
@@ -36,6 +37,7 @@ public class Database {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String data = snapshot.getValue(String.class);
                 allDataMap.get("rating").add(data);
+                mainActivity.updateResultField();
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

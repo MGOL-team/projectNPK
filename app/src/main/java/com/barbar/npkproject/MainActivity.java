@@ -43,40 +43,37 @@ public class MainActivity extends AppCompatActivity {
 
         textLoginName.setText(getLogin());
 
-        myBase = new Database(database.getReference("users").child(getLogin()));
+        myBase = new Database(database.getReference("users").child(getLogin()), this);
 
         updateResultField();
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String messageValue = editTextField.getText().toString();
-                updateResultField();
-                if (messageValue.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Введите число", Toast.LENGTH_SHORT).show();
+        sendButton.setOnClickListener(view -> {
+            String messageValue = editTextField.getText().toString();
+            updateResultField();
+            if (messageValue.equals("")) {
+                Toast.makeText(getApplicationContext(), "Введите число", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                double num = Double.parseDouble(messageValue);
+
+                if (num < 1 || num > 5) {
+                    Toast.makeText(getApplicationContext(), "Введите число от 1 до 5", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                try {
-                    double num = Double.parseDouble(messageValue);
-
-                    if (num < 1 || num > 5) {
-                        Toast.makeText(getApplicationContext(), "Введите число от 1 до 5", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + "");
-                    textViewUser.setText("");
-                    editTextField.setText("");
-                    updateResultField();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
-                }
+                myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + "");
+                textViewUser.setText("");
+                editTextField.setText("");
+                updateResultField();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @SuppressLint("SetTextI18n")
-    private void updateResultField () {
+    public void updateResultField () {
         List<String> ratingList = myBase.getAllDataMap().get("rating");
 
         double sum = 0;
