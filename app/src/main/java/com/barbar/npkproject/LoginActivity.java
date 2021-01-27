@@ -74,7 +74,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = ETemail.getText().toString();
         String password = ETpassword.getText().toString();
 
-        if (email.length() < 3 || password.length() < 3) {
+
+
+        if (email.length() < 2 || password.length() < 3) {
             Toast.makeText(getApplicationContext(), "Слишком короткий логин или пароль", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -84,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        if (email.contains("?") || password.contains("?")) {
+        if (email.contains("?") || password.contains("?") || email.contains(" ") || password.contains(" ")) {
             Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_SHORT).show();
             return;
         }
