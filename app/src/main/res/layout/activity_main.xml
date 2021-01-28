@@ -25,11 +25,11 @@
         android:layout_height="0dp"
         android:layout_weight="9"
         android:text=""
-        android:textSize="24sp"
+        android:textColor="@color/purple_500"
+        android:textSize="56sp"
         android:id="@+id/text_view"
-        android:paddingLeft="30sp"
+        android:gravity="center_horizontal"
         android:paddingTop="30sp"
-        android:paddingRight="30sp"
         android:paddingBottom="30sp"/>
 
     <EditText

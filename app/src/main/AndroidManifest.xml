@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NPKproject">
         <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

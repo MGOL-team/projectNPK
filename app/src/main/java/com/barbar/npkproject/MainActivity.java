@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,62 +44,45 @@ public class MainActivity extends AppCompatActivity {
 
         textLoginName.setText(getLogin());
 
-        myBase = new Database(database.getReference("users").child(getLogin()));
+        myBase = new Database(database.getReference("users").child(getLogin()), this);
 
         updateResultField();
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String messageValue = editTextField.getText().toString();
-                updateResultField();
-                if (messageValue.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Введите число", Toast.LENGTH_SHORT).show();
+        sendButton.setOnClickListener(view -> {
+            String messageValue = editTextField.getText().toString();
+            updateResultField();
+            if (messageValue.equals("")) {
+                Toast.makeText(getApplicationContext(), "Введите число", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            try {
+                double num = Double.parseDouble(messageValue);
+
+                if (num < 1 || num > 5) {
+                    Toast.makeText(getApplicationContext(), "Введите число от 1 до 5", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                try {
-                    double num = Double.parseDouble(messageValue);
-
-                    if (num < 1 || num > 5) {
-                        Toast.makeText(getApplicationContext(), "Введите число от 1 до 5", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + "");
-                    textViewUser.setText("");
-                    editTextField.setText("");
-                    updateResultField();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
+                String myRating = (String) textView.getText();
+                if (myRating.equals("NaN")) {
+                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + " 1 " + new Date().getTime());
+                } else {
+                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + " " + myRating + " " + new Date().getTime());
                 }
+                textViewUser.setText("");
+                editTextField.setText("");
+                updateResultField();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @SuppressLint("SetTextI18n")
-    private void updateResultField () {
+    public void updateResultField () {
         List<String> ratingList = myBase.getAllDataMap().get("rating");
 
-        double sum = 0;
-
-        try {
-            for (String data : ratingList) {
-                double num = Double.parseDouble(data);
-                sum += num;
-            }
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Ошибка в updateResultField", Toast.LENGTH_SHORT).show();
-        }
-
-        sum /= ratingList.size();
-
-
-        String result = String.valueOf(sum);
-        if (result.length() > 4) {
-            result = result.substring(0, 4);
-        }
-
-        textView.setText("Rating : " + result);
+        textView.setText(new DataAnalyze().getResult(ratingList));
     }
 
     private String getLogin () {

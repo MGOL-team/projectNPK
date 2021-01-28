@@ -1,5 +1,7 @@
 package com.barbar.npkproject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,7 +11,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,6 +28,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText ETpassword;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("users_list");
+
+    List<String> user_names_list = new ArrayList<>();
+    List<String> user_passes_list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +48,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(getApplicationContext(), "Сохраненных аккаунтов не обнаружено", Toast.LENGTH_SHORT).show();
         }
 
+        myRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String data = snapshot.getValue(String.class);
+                user_names_list.add(data.substring(0, data.indexOf("?")));
+                user_passes_list.add(data.substring(data.indexOf("?") + 1));
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
         findViewById(R.id.button_log).setOnClickListener(this);
         findViewById(R.id.button_reg).setOnClickListener(this);
     }
@@ -44,18 +74,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = ETemail.getText().toString();
         String password = ETpassword.getText().toString();
 
-        if (email.length() < 1 || password.length() < 3) {
+
+
+        if (email.length() < 2 || password.length() < 3) {
+            Toast.makeText(getApplicationContext(), "Слишком короткий логин или пароль", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (email.startsWith("id_")) {
+            Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (email.contains("?") || password.contains("?") || email.contains(" ") || password.contains(" ")) {
+            Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (view.getId() == R.id.button_log) {
-            if (!getLogin().equals("COMMON TEXT")) {
-                signing(email, password);
-            } else {
-                Toast.makeText(getApplicationContext(), "Данного аккаунта не существует", Toast.LENGTH_SHORT).show();
-            }
+            signing(email, password);
         } else if (view.getId() == R.id.button_reg) {
-            registration(ETemail.getText().toString(), ETpassword.getText().toString());
+            registration(email, password);
         }
 
         if (successLogReg) {
@@ -67,14 +106,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean successLogReg = false;
 
     private void signing (String email, String password) {
-        Toast.makeText(getApplicationContext(), "singing", Toast.LENGTH_SHORT).show();
-        successLogReg = true;
+        for (int i = 0;i < user_names_list.size();i++) {
+            if (email.equals(user_names_list.get(i)) && password.equals(user_passes_list.get(i))) {
+                Toast.makeText(getApplicationContext(), "singing", Toast.LENGTH_SHORT).show();
+                successLogReg = true;
+                break;
+            }
+        }
+        if (!successLogReg) {
+            Toast.makeText(getApplicationContext(), "this user does not exist", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void registration (String email, String password) {
-        Toast.makeText(getApplicationContext(), "registration", Toast.LENGTH_SHORT).show();
         successLogReg = true;
-        database.getReference("users_list").push().setValue(email);
+
+        for (int i = 0;i < user_names_list.size();i++) {
+            if (email.equals(user_names_list.get(i))) {
+                Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_LONG).show();
+                successLogReg = false;
+                return;
+            }
+        }
+
+
+        Toast.makeText(getApplicationContext(), "registration", Toast.LENGTH_SHORT).show();
+        database.getReference("users_list").push().setValue(email + "?" + password);
     }
 
     private void goToNextPage () {
@@ -85,15 +142,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void saveText() {
         sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
-        ed.putString("login", "id_" + ETemail.getText().toString());
+        ed.putString("login", ETemail.getText().toString());
         ed.putString("password", ETpassword.getText().toString());
         ed.apply();
-//        Toast.makeText(MainActivity.this, "Text saved", Toast.LENGTH_SHORT).show();
     }
 
     private String getLogin () {
         sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
         return sPref.getString("login", "COMMON TEXT");
-//        Toast.makeText(MainActivity.this, "Text loaded", Toast.LENGTH_SHORT).show();
     }
 }
