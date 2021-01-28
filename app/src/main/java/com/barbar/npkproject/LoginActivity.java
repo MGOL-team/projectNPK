@@ -41,19 +41,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ETemail = findViewById(R.id.et_email);
         ETpassword = findViewById(R.id.et_password);
 
-        if (!getLogin().equals("COMMON TEXT")) {
-            Toast.makeText(getApplicationContext(), getLogin(), Toast.LENGTH_SHORT).show();
-            goToNextPage();
-        } else {
-            Toast.makeText(getApplicationContext(), "Сохраненных аккаунтов не обнаружено", Toast.LENGTH_SHORT).show();
-        }
-
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String data = snapshot.getValue(String.class);
                 user_names_list.add(data.substring(0, data.indexOf("?")));
                 user_passes_list.add(data.substring(data.indexOf("?") + 1));
+                //Toast.makeText(getApplicationContext(), data.substring(0, data.indexOf("?")) + " " + data.substring(data.indexOf("?") + 1), Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
@@ -62,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
         findViewById(R.id.button_log).setOnClickListener(this);
@@ -70,11 +64,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (!getLogin().equals("COMMON TEXT")) {
+            Toast.makeText(getApplicationContext(), getLogin() + " " + getPassword(), Toast.LENGTH_SHORT).show();
+            signing(getLogin(), getPassword());
+            if (successLogReg) {
+                goToNextPage();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Сохраненных аккаунтов не обнаружено", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         String email = ETemail.getText().toString();
         String password = ETpassword.getText().toString();
 
-
+        if (email.length() == 0 && password.length() == 0) {
+            signing(getLogin(), getPassword());
+            if (successLogReg) {
+                goToNextPage();
+            }
+            return;
+        }
 
         if (email.length() < 2 || password.length() < 3) {
             Toast.makeText(getApplicationContext(), "Слишком короткий логин или пароль", Toast.LENGTH_SHORT).show();
@@ -129,13 +143,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
 
+        saveText();
 
         Toast.makeText(getApplicationContext(), "registration", Toast.LENGTH_SHORT).show();
         database.getReference("users_list").push().setValue(email + "?" + password);
     }
 
     private void goToNextPage () {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, OrderActivity.class);
         startActivity(intent);
     }
 
@@ -150,5 +165,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String getLogin () {
         sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
         return sPref.getString("login", "COMMON TEXT");
+    }
+
+    private String getPassword () {
+        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+        return sPref.getString("password", "COMMON TEXT");
     }
 }
