@@ -9,6 +9,7 @@ import java.util.List;
 public class DataAnalyze {
 
     public String getResult (List<String> list) {
+        // calibration
         if (list.size() <= 2) {
             return "NaN";
         }
@@ -29,9 +30,9 @@ public class DataAnalyze {
         }
 
         double[] rating = new double[notes.size()];
-        for (int i = 0;i < rating.length;i++) {
-            rating[i] = notes.get(i);
-        }
+        //for (int i = 0;i < rating.length;i++) {
+        //    rating[i] = notes.get(i);
+        //}
 
         rating[0] = (notes.get(0) * 2 + notes.get(1)) / 3.0;
         for (int i = 1;i < rating.length - 1;i++) {
@@ -41,8 +42,16 @@ public class DataAnalyze {
 
         double currentTime = new Date().getTime() / 86_400_000.0;
         double[] influence = new double[notes.size()];
+
+        double sum_of_exponent = 0;
+
         for (int i = 0;i < influence.length;i++) {
-            influence[i] = sigmoid(currentTime - times.get(i)) * Math.sqrt(priorities.get(i));
+            sum_of_exponent += Math.exp(rating[i]);
+        }
+
+        for (int i = 0;i < influence.length;i++) {
+            // TODO Не от текущей даты, а от последней
+            influence[i] = sigmoid(times.get(i) - currentTime) * (Math.exp(rating[i]) / sum_of_exponent);
         }
 
         double sum_of_influences = 0;
