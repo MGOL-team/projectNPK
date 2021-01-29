@@ -21,7 +21,7 @@ public class OrderActivity extends AppCompatActivity {
     private Button confirm_button;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("orders_list");
+    DatabaseReference myRef = database.getReference("temp_orders_list");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class OrderActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Введите корректный заказ", Toast.LENGTH_SHORT).show();
                 } else {
                     saveText(ET_field_items.getText().toString() + "☺" + ET_field_address.getText().toString() + "☺" + ET_field_comments.getText().toString());
+                    myRef.child(getLogin()).setValue(ET_field_items.getText().toString() + "☺" + ET_field_address.getText().toString() + "☺" + ET_field_comments.getText().toString()+ "☺" + getLogin());
                     goToTheConfirmPage();
                 }
             }
@@ -56,5 +57,10 @@ public class OrderActivity extends AppCompatActivity {
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString("temp_order", order);
         ed.apply();
+    }
+
+    private String getLogin () {
+        SharedPreferences sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+        return sPref.getString("login", "COMMON TEXT");
     }
 }

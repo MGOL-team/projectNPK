@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NPKproject">
-        <activity android:name=".ConfirmOrderActivity"></activity>
+        <activity android:name=".ReportActivity"></activity>
+        <activity
+            android:name=".OrderListActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ConfirmOrderActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".OrderActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

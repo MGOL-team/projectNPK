@@ -3,6 +3,7 @@ package com.barbar.npkproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     TextView textLoginName;
     TextView textViewUser;
 
+    Button toDoOrderButton;
+    Button toCheckOrdersButton;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,23 @@ public class MainActivity extends AppCompatActivity {
         sendButton = findViewById(R.id.send_button);
         textLoginName = findViewById(R.id.text_login_name);
         textViewUser = findViewById(R.id.text_edit_user);
+        toDoOrderButton = findViewById(R.id.to_do_order_button);
+        toCheckOrdersButton = findViewById(R.id.to_check_orders_button);
+
+        toDoOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OrderActivity.class);
+                startActivity(intent);
+            }
+        });
+        toCheckOrdersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OrderListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         textLoginName.setText(getLogin());
 

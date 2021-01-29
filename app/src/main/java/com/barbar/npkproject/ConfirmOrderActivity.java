@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -15,7 +16,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private Button confirm_button;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("temp_orders_list");
+    DatabaseReference myRef = database.getReference("orders_list");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), getData() + "☺" + getLogin(), Toast.LENGTH_LONG).show();
+                database.getReference("temp_orders_list").child(getLogin()).removeValue();
                 myRef.push().setValue(getData() + "☺" + getLogin());
             }
         });

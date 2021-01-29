@@ -41,13 +41,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ETemail = findViewById(R.id.et_email);
         ETpassword = findViewById(R.id.et_password);
 
+        ETemail.setText(getLogin());
+        ETpassword.setText(getPassword());
+
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String data = snapshot.getValue(String.class);
                 user_names_list.add(data.substring(0, data.indexOf("?")));
                 user_passes_list.add(data.substring(data.indexOf("?") + 1));
-                //Toast.makeText(getApplicationContext(), data.substring(0, data.indexOf("?")) + " " + data.substring(data.indexOf("?") + 1), Toast.LENGTH_SHORT).show();
+                if (ETemail.getText().toString().equals(data.substring(0, data.indexOf("?"))) && ETpassword.getText().toString().equals(data.substring(data.indexOf("?") + 1))) {
+                    goToNextPage();
+                }
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
@@ -61,20 +66,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.button_log).setOnClickListener(this);
         findViewById(R.id.button_reg).setOnClickListener(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!getLogin().equals("COMMON TEXT")) {
-            Toast.makeText(getApplicationContext(), getLogin() + " " + getPassword(), Toast.LENGTH_SHORT).show();
-            signing(getLogin(), getPassword());
-            if (successLogReg) {
-                goToNextPage();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "Сохраненных аккаунтов не обнаружено", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
@@ -133,6 +124,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void registration (String email, String password) {
+        if (email.contains("admin")) {
+            Toast.makeText(getApplicationContext(), "Данное имя пользователя используется системой", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         successLogReg = true;
 
         for (int i = 0;i < user_names_list.size();i++) {
@@ -150,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void goToNextPage () {
-        Intent intent = new Intent(this, OrderActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
