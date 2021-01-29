@@ -32,6 +32,31 @@
         android:paddingTop="30sp"
         android:paddingBottom="30sp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:orientation="horizontal"
+        android:layout_weight="1.5">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:text="To do order"
+            android:textSize="18sp"
+            android:id="@+id/to_do_order_button"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:text="To check orders"
+            android:textSize="18sp"
+            android:id="@+id/to_check_orders_button"/>
+
+
+    </LinearLayout>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="0dp"
