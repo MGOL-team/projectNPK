@@ -8,6 +8,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +20,7 @@ public class Database {
 
     MainActivity mainActivity;
 
-    private final Map<String, List<String>> allDataMap;
+    private final Map<String, List<JSONObject>> allDataMap;
 
     private void initializeListsOfMaps() {
         allDataMap.put("rating", new ArrayList<>());
@@ -36,7 +39,9 @@ public class Database {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String data = snapshot.getValue(String.class);
-                allDataMap.get("rating").add(data);
+                try {
+                    allDataMap.get("rating").add(new JSONObject(data));
+                } catch (JSONException ignore) {}
                 mainActivity.updateResultField();
             }
             @Override
@@ -54,7 +59,7 @@ public class Database {
         });
     }
 
-    public Map<String, List<String>> getAllDataMap () {
+    public Map<String, List<JSONObject>> getAllDataMap () {
         return allDataMap;
     }
 }

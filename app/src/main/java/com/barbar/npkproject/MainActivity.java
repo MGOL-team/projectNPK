@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button toDoOrderButton;
     Button toCheckOrdersButton;
+    Button toReportButton;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         textViewUser = findViewById(R.id.text_edit_user);
         toDoOrderButton = findViewById(R.id.to_do_order_button);
         toCheckOrdersButton = findViewById(R.id.to_check_orders_button);
+        toReportButton = findViewById(R.id.to_report_button);
 
         toDoOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, OrderListActivity.class);
+                startActivity(intent);
+            }
+        });
+        toReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReportActivity.class);
                 startActivity(intent);
             }
         });
@@ -85,11 +97,21 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 String myRating = (String) textView.getText();
-                if (myRating.equals("NaN")) {
-                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + " 1 " + new Date().getTime());
-                } else {
-                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + " " + myRating + " " + new Date().getTime());
+                JSONObject data = new JSONObject();
+                try {
+                    data.put("value", num);
+                    data.put("time", new Date().getTime());
+                    data.put("login", getLogin());
+                    if (myRating.equals("NaN")) {
+                        data.put("apr_rating", 1);
+                    } else {
+                        data.put("apr_rating", myRating);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                myRef.child(textViewUser.getText().toString()).child("rating").push().setValue(data.toString());
+
                 textViewUser.setText("");
                 editTextField.setText("");
                 updateResultField();
@@ -101,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void updateResultField () {
-        List<String> ratingList = myBase.getAllDataMap().get("rating");
+        List<JSONObject> ratingList = myBase.getAllDataMap().get("rating");
 
         textView.setText(new DataAnalyze().getResult(ratingList));
     }

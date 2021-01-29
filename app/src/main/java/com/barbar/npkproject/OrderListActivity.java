@@ -15,6 +15,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Objects;
+
 public class OrderListActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -33,11 +38,20 @@ public class OrderListActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                String[] strings = snapshot.getValue(String.class).split("☺");
-                if (strings[2].length() > 2) {
-                    textView.setText(textView.getText() + "\n\n" + strings[0] + "\nАдрес: " + strings[1] + "\nКомментарий: " + strings[2]);
-                } else {
-                    textView.setText(textView.getText() + "\n\n" + strings[0] + "\nАдрес: " + strings[1]);
+                try {
+                    JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
+                    if (object.get("comments").toString().length() > 5) {
+                        textView.setText(textView.getText() + "\n\n" +
+                                object.get("items").toString() + "\nАдрес: " +
+                                object.get("address").toString() + "\nКомментарий: " +
+                                object.get("comments").toString());
+                    } else {
+                        textView.setText(textView.getText() + "\n\n" +
+                                object.get("items").toString() + "\nАдрес: " +
+                                object.get("address").toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
             @Override
