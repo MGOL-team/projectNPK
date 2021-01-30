@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_weight="2"
         android:text=""
         android:textColor="@color/purple_500"
         android:textSize="56sp"
@@ -31,6 +31,14 @@
         android:gravity="center_horizontal"
         android:paddingTop="30sp"
         android:paddingBottom="30sp"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="5"
+        android:id="@+id/list_view"
+        android:paddingLeft="12sp"
+        android:paddingTop="12sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
