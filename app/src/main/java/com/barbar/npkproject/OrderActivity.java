@@ -50,6 +50,7 @@ public class OrderActivity extends AppCompatActivity {
                         data.put("address", ET_field_address.getText().toString());
                         data.put("comments", ET_field_comments.getText().toString());
                         data.put("login", getLogin());
+                        data.put("type", "estimator");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

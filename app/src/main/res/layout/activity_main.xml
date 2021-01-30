@@ -62,6 +62,14 @@
             android:textSize="14sp"
             android:id="@+id/to_report_button"/>
 
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:text="Log out"
+            android:textSize="14sp"
+            android:id="@+id/log_out_button"/>
+
 
     </LinearLayout>
 

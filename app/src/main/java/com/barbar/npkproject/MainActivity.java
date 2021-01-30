@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     Button toDoOrderButton;
     Button toCheckOrdersButton;
     Button toReportButton;
+    Button logOutButton;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         toDoOrderButton = findViewById(R.id.to_do_order_button);
         toCheckOrdersButton = findViewById(R.id.to_check_orders_button);
         toReportButton = findViewById(R.id.to_report_button);
+        logOutButton = findViewById(R.id.log_out_button);
 
         toDoOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +73,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+                startActivity(intent);
+            }
+        });
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putString("login", "");
+                ed.putString("password", "");
+                ed.apply();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -107,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         data.put("apr_rating", myRating);
                     }
+                    data.put("type", "estimator");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
