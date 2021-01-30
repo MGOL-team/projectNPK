@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class OrderActivity extends AppCompatActivity {
 
     private EditText ET_field_items;
@@ -33,14 +36,26 @@ public class OrderActivity extends AppCompatActivity {
         ET_field_items = findViewById(R.id.items_field);
         confirm_button = findViewById(R.id.confirm_button);
 
+
+
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ET_field_items.getText().toString().length() < 2 || ET_field_address.getText().toString().length() < 5) {
                     Toast.makeText(getApplicationContext(), "Введите корректный заказ", Toast.LENGTH_SHORT).show();
                 } else {
-                    saveText(ET_field_items.getText().toString() + "☺" + ET_field_address.getText().toString() + "☺" + ET_field_comments.getText().toString());
-                    myRef.child(getLogin()).setValue(ET_field_items.getText().toString() + "☺" + ET_field_address.getText().toString() + "☺" + ET_field_comments.getText().toString()+ "☺" + getLogin());
+                    JSONObject data = new JSONObject();
+                    try {
+                        data.put("items", ET_field_items.getText().toString());
+                        data.put("address", ET_field_address.getText().toString());
+                        data.put("comments", ET_field_comments.getText().toString());
+                        data.put("login", getLogin());
+                        data.put("type", "estimator");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    saveText(data.toString());
+                    myRef.child(getLogin()).setValue(data.toString());
                     goToTheConfirmPage();
                 }
             }

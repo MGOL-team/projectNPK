@@ -17,6 +17,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +52,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                String data = snapshot.getValue(String.class);
-                user_names_list.add(data.substring(0, data.indexOf("?")));
-                user_passes_list.add(data.substring(data.indexOf("?") + 1));
-                if (ETemail.getText().toString().equals(data.substring(0, data.indexOf("?"))) && ETpassword.getText().toString().equals(data.substring(data.indexOf("?") + 1))) {
+                String data_snapshot = snapshot.getValue(String.class);
+                try {
+                    assert data_snapshot != null;
+                    JSONObject data = new JSONObject(data_snapshot);
+                    user_names_list.add((String) data.get("login"));
+                    user_passes_list.add((String) data.get("password"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (user_names_list.get(user_names_list.size() - 1).equals(ETemail.getText().toString()) &&
+                        user_passes_list.get(user_passes_list.size() - 1).equals(hashFunction(ETpassword.getText().toString()))) {
                     goToNextPage();
                 }
             }
@@ -73,14 +85,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = ETemail.getText().toString();
         String password = ETpassword.getText().toString();
 
-        if (email.length() == 0 && password.length() == 0) {
-            signing(getLogin(), getPassword());
-            if (successLogReg) {
-                goToNextPage();
-            }
-            return;
-        }
-
         if (email.length() < 2 || password.length() < 3) {
             Toast.makeText(getApplicationContext(), "Слишком короткий логин или пароль", Toast.LENGTH_SHORT).show();
             return;
@@ -91,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        if (email.contains("?") || password.contains("?") || email.contains(" ") || password.contains(" ")) {
+        if (email.contains("?") || email.contains(" ")) {
             Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -111,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean successLogReg = false;
 
     private void signing (String email, String password) {
+        password = hashFunction(password);
         for (int i = 0;i < user_names_list.size();i++) {
             if (email.equals(user_names_list.get(i)) && password.equals(user_passes_list.get(i))) {
                 Toast.makeText(getApplicationContext(), "singing", Toast.LENGTH_SHORT).show();
@@ -124,14 +129,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void registration (String email, String password) {
+
         if (email.contains("admin")) {
             Toast.makeText(getApplicationContext(), "Данное имя пользователя используется системой", Toast.LENGTH_LONG).show();
-            return;
+           // TODO redo ☻ return;
         }
 
         successLogReg = true;
 
         for (int i = 0;i < user_names_list.size();i++) {
+            Toast.makeText(getApplicationContext(), "Iteration : " + i, Toast.LENGTH_LONG).show();
             if (email.equals(user_names_list.get(i))) {
                 Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_LONG).show();
                 successLogReg = false;
@@ -141,8 +148,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         saveText();
 
-        Toast.makeText(getApplicationContext(), "registration", Toast.LENGTH_SHORT).show();
-        database.getReference("users_list").push().setValue(email + "?" + password);
+        JSONObject data = new JSONObject();
+        try {
+            data.put("login", email);
+            data.put("password", hashFunction(password));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        database.getReference("users_list").push().setValue(data.toString());
     }
 
     private void goToNextPage () {
@@ -166,5 +180,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String getPassword () {
         sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
         return sPref.getString("password", "COMMON TEXT");
+    }
+
+    private String hashFunction (String password) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(password.getBytes());
+            return new String(messageDigest.digest());
+//            String hash;
+//            do {
+//                MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+//                messageDigest.update(password.getBytes());
+//                hash = new String(messageDigest.digest());
+//            } while (hash.contains(" ") || hash.contains("\"") || hash.contains("\\") || hash.contains(":"));
+//            return hash;
+        } catch (Exception ignore) {
+            return "Error in hashFunction";
+        }
     }
 }

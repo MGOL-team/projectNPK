@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_weight="2"
         android:text=""
         android:textColor="@color/purple_500"
         android:textSize="56sp"
@@ -31,6 +31,14 @@
         android:gravity="center_horizontal"
         android:paddingTop="30sp"
         android:paddingBottom="30sp"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="5"
+        android:id="@+id/list_view"
+        android:paddingLeft="12sp"
+        android:paddingTop="12sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +51,7 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:text="To do order"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:id="@+id/to_do_order_button"/>
 
         <Button
@@ -51,8 +59,24 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:text="To check orders"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:id="@+id/to_check_orders_button"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:text="Report"
+            android:textSize="14sp"
+            android:id="@+id/to_report_button"/>
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:text="Log out"
+            android:textSize="14sp"
+            android:id="@+id/log_out_button"/>
 
 
     </LinearLayout>

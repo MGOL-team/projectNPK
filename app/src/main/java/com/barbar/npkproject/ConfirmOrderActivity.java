@@ -28,9 +28,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), getData() + "☺" + getLogin(), Toast.LENGTH_LONG).show();
                 database.getReference("temp_orders_list").child(getLogin()).removeValue();
-                myRef.push().setValue(getData() + "☺" + getLogin());
+                myRef.push().setValue(getData());
             }
         });
     }

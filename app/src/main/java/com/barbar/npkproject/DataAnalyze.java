@@ -2,13 +2,15 @@ package com.barbar.npkproject;
 
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class DataAnalyze {
 
-    public String getResult (List<String> list) {
+    public String getResult (List<JSONObject> list) {
         // calibration
         if (list.size() <= 2) {
             return "NaN";
@@ -19,11 +21,10 @@ public class DataAnalyze {
         List<Double> times = new ArrayList<>();
 
         try {
-            for (String data : list) {
-                String[] strings = data.split(" ");
-                notes.add(Double.parseDouble(strings[0]));
-                priorities.add(Double.parseDouble(strings[1]));
-                times.add(Double.parseDouble(strings[2]) / 86_400_000.0);
+            for (JSONObject data : list) {
+                notes.add(Double.parseDouble(data.get("value").toString()));
+                priorities.add(Double.parseDouble(data.get("apr_rating").toString()));
+                times.add(Double.parseDouble(data.get("time").toString()) / 86_400_000.0);
             }
         } catch (Exception e) {
             return "-0";
