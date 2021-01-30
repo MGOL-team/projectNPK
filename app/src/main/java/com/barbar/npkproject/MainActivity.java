@@ -5,10 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         toCheckOrdersButton = findViewById(R.id.to_check_orders_button);
         listView = findViewById(R.id.list_view);
         goToSettingsButton = findViewById(R.id.settings_button);
+
 
         List<String> list_of_ratings = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
