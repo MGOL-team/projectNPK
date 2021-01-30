@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     TextView textLoginName;
     TextView textViewUser;
 
-    Button toDoOrderButton;
-    Button toCheckOrdersButton;
+    ImageButton toDoOrderButton;
+    ImageButton toCheckOrdersButton;
 
     @SuppressLint("SetTextI18n")
     @Override
