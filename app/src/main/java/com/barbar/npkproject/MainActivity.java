@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton toDoOrderButton;
     ImageButton toCheckOrdersButton;
+    ImageButton goToSettingsButton;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         textViewUser = findViewById(R.id.text_edit_user);
         toDoOrderButton = findViewById(R.id.to_do_order_button);
         toCheckOrdersButton = findViewById(R.id.to_check_orders_button);
+        goToSettingsButton = findViewById(R.id.settings_button);
 
         toDoOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        goToSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
         toCheckOrdersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
