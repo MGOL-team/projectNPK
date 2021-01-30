@@ -26,23 +26,16 @@
             android:textSize="24sp"
             android:id="@+id/text_login_name"
             android:paddingLeft="15sp"
-            android:paddingTop="30sp"
+            android:paddingTop="20sp"
             android:paddingRight="5sp"
-            android:paddingBottom="3sp"/>
-
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/settings" />
+            android:paddingBottom="10sp"/>
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0sp"
         android:layout_gravity="top"
-        android:layout_weight="2.4"
+        android:layout_weight="2.8"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/no_photo" />
 
@@ -55,13 +48,13 @@
         //Name and Surname
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_weight="1"
             android:text="Имя Фамилия"
 
             android:textSize="24sp"
-            android:paddingLeft="15sp"
+            android:paddingLeft="10sp"
             android:paddingTop="0sp"
             android:paddingRight="5sp"
             android:paddingBottom="0sp"/>
@@ -69,7 +62,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0sp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -82,7 +75,7 @@
 
             <TextView
                 android:layout_width="0sp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="8"
                 android:text=""
                 android:textColor="@color/purple_500"
@@ -134,42 +127,53 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0sp"
-        android:layout_weight="0.8"
+        android:layout_weight="0.75"
         android:orientation="horizontal"
         android:background="@color/top_panel_menu">
 
-        <Button
+        <ImageButton
             android:layout_weight="1"
-            android:layout_width="0sp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="To do order"
-            android:textSize="14sp"
+            android:src="@drawable/make_order"
+            android:background="0"
+            android:scaleType="fitCenter"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:id="@+id/to_do_order_button"/>
 
-        <Button
+        <ImageButton
             android:layout_weight="1"
-            android:layout_width="0sp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="To check orders"
-            android:textSize="14sp"
+            android:src="@drawable/account"
+            android:background="0"
+            android:scaleType="fitCenter"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:id="@+id/activity_main"/>
+
+        <ImageButton
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/delivery"
+            android:background="0"
+            android:scaleType="fitCenter"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:id="@+id/to_check_orders_button"/>
 
-        <Button
+        <ImageButton
             android:layout_weight="1"
             android:layout_width="0sp"
             android:layout_height="match_parent"
-            android:text="Report"
-            android:textSize="14sp"
-            android:id="@+id/to_report_button"/>
-
-        <Button
-            android:layout_weight="1"
-            android:layout_width="0sp"
-            android:layout_height="match_parent"
-            android:text="Log out"
-            android:textSize="14sp"
-            android:id="@+id/log_out_button"/>
-
+            android:src="@drawable/settings"
+            android:background="0"
+            android:scaleType="fitCenter"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:id="@+id/settings_button"/>
     </LinearLayout>
 
 </LinearLayout>
