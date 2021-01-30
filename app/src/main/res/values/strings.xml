@@ -11,4 +11,5 @@
     <string name="our_mail">Our Mail</string>
     <string name="log_out">Log out</string>
     <string name="standard_chat_name">Standard chat name</string>
+    <string name="error_text">########</string>
 </resources>
