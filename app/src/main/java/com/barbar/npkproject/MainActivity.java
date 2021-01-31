@@ -52,7 +52,14 @@ public class MainActivity extends AppCompatActivity {
     ImageButton toDoOrderButton;
     ImageButton toCheckOrdersButton;
     ImageButton goToSettingsButton;
-
+    List<User> users = new ArrayList<User>();
+    {
+        users.add(new  User("Васька", "котэ"));
+        users.add(new  User("Мурзик", "котяра"));
+        users.add(new User("Мурка", "кошка"));
+        users.add(new  User("Барсик", "котик"));
+        users.add(new  User("Лиза", "кошечка"));
+    }
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,31 +76,30 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_view);
         goToSettingsButton = findViewById(R.id.settings_button);
 
-
-        List<String> list_of_ratings = new ArrayList<>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, list_of_ratings);
+        MarkAdapter adapter = new MarkAdapter(this);
 
         listView.setAdapter(adapter);
 
         myRef.child(getLogin()).child("rating").addChildEventListener(new ChildEventListener() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
-                    list_of_ratings.add(object.get("value") + " — " + object.get("login"));
+
+                    //users.add(new User((String) object.get("value"), (String) object.get("login")));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) { }
         });
@@ -156,6 +162,36 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private class User {
+        public  String from_who;
+        public  String mark;
+
+        public User(String from_who, String mark) {
+            this.from_who = from_who;
+            this.mark = mark;
+        }
+    }
+
+    private class MarkAdapter extends ArrayAdapter<User> {
+
+        public MarkAdapter(Context context) {
+            super(context, R.layout.mark_items, users);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View some_view = inflater.inflate(R.layout.mark_items, parent, false);
+            TextView mark_us = (TextView) some_view.findViewById(R.id.user_id_mark);
+            TextView us_id = (TextView) some_view.findViewById(R.id.user_id);
+            mark_us.setText(users.get(position).mark);
+            us_id.setText(users.get(position).from_who);
+
+            return some_view;
+        }
     }
 
     @SuppressLint("SetTextI18n")
