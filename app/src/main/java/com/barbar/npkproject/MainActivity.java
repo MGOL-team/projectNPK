@@ -178,8 +178,8 @@ public class MainActivity extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View some_view = inflater.inflate(R.layout.mark_items, parent, false);
-            TextView mark_us = (TextView) some_view.findViewById(R.id.user_id_mark);
-            TextView us_id = (TextView) some_view.findViewById(R.id.user_id);
+            TextView mark_us = (TextView) some_view.findViewById(R.id.user_mark);
+            TextView us_id = (TextView) some_view.findViewById(R.id.id_user);
             mark_us.setText(users.get(position).mark);
             us_id.setText(users.get(position).from_who);
 

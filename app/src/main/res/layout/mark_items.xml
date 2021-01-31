@@ -3,9 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="90sp"
-    android:background="@drawable/frame">
-
+    android:layout_height="97sp">
+    <LinearLayout
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="90sp"
+        android:background="@drawable/frame">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0sp"
@@ -17,7 +21,7 @@
             android:layout_height="0sp"
             android:layout_weight="1"
             android:text="ID:########"
-            android:id="@+id/user_id"
+            android:id="@+id/user_mark"
             android:paddingStart="15sp"
             android:paddingTop="5sp"
             android:paddingEnd="5sp"
@@ -28,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_weight="1"
-            android:paddingBottom="8sp"
-            android:paddingTop="8sp"
+            android:paddingBottom="14sp"
+            android:paddingTop="2sp"
             android:paddingLeft="8sp"
             android:paddingRight="8sp">
             <ImageView
@@ -44,7 +48,7 @@
                 android:layout_weight="4"
                 android:paddingStart="5dp"
                 android:textSize="24sp"
-                android:id="@+id/user_id_mark"
+                android:id="@+id/id_user"
                 >
 
             </TextView>
@@ -56,14 +60,16 @@
         android:layout_height="57dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_gravity="bottom">
+        android:layout_gravity="center">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Подробнее"
+            android:text="ПОДРОБНЕЕ"
+
             android:textSize="20sp" />
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
