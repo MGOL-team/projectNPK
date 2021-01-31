@@ -53,13 +53,6 @@ public class MainActivity extends AppCompatActivity {
     ImageButton toCheckOrdersButton;
     ImageButton goToSettingsButton;
     List<User> users = new ArrayList<User>();
-    {
-        users.add(new  User("Васька", "котэ"));
-        users.add(new  User("Мурзик", "котяра"));
-        users.add(new User("Мурка", "кошка"));
-        users.add(new  User("Барсик", "котик"));
-        users.add(new  User("Лиза", "кошечка"));
-    }
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
 
-                    //users.add(new User((String) object.get("value"), (String) object.get("login")));
+                    users.add(new User(object.get("value").toString(), object.get("login").toString()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
