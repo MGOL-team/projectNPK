@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public ViewPager tabPager;
 
 
-
+//А у жени первый дип
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
