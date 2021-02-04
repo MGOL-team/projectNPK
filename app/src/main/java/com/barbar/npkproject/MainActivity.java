@@ -29,10 +29,8 @@ public class MainActivity extends AppCompatActivity {
     TabItem settings;
     public ViewPager tabPager;
 
+/// sdlkfndlvj
 
-//А у всеслваыптвкпвпку4и
-    //dfsdgsdsf
-    //hdgfghfddvcvb
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
