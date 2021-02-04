@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 //А у всеслваыптвкпвпку4и
+    //dfsdgsdsf
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
