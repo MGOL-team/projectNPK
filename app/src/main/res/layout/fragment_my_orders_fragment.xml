@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.My_orders_fragment"
+    android:id="@+id/okkay">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".OrderActivity">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:paddingRight="36sp"
+            android:paddingLeft="36sp"
+            android:paddingTop="24sp"
+
+            android:hint="Товары"
+
+            android:textSize="24sp"
+            android:id="@+id/items_field"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:paddingRight="36sp"
+            android:paddingLeft="36sp"
+            android:paddingTop="24sp"
+
+            android:hint="Адрес доставки"
+
+            android:textSize="24sp"
+            android:id="@+id/address_field"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:paddingRight="36sp"
+            android:paddingLeft="36sp"
+            android:paddingTop="24sp"
+
+            android:hint="Комментарии"
+
+            android:textSize="24sp"
+            android:id="@+id/comments_field"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:paddingRight="36sp"
+            android:paddingLeft="36sp"
+            android:paddingTop="24sp"
+
+            android:text="Confirm"
+            android:textSize="24sp"
+            android:id="@+id/confirm_button"/>
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

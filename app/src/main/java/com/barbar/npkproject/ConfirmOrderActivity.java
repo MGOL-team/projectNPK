@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
-    private Button confirm_button;
+    /*private Button confirm_button;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("orders_list");
@@ -42,5 +42,5 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private String getLogin () {
         SharedPreferences sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
         return sPref.getString("login", "COMMON TEXT");
-    }
+    }*/
 }

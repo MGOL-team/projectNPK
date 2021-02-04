@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0sp"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:background="@color/top_panel_menu">
 
@@ -20,7 +20,7 @@
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="7"
+            android:layout_weight="1"
             android:text="@string/error_text"
 
             android:textSize="24sp"
@@ -31,151 +31,43 @@
             android:paddingBottom="10sp"/>
     </LinearLayout>
 
-    <ImageView
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/tabPager"
         android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_gravity="top"
-        android:layout_weight="2.8"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/no_photo" />
+        android:layout_height="0dp"
+        android:layout_weight="11"/>
 
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabBar"
         android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_weight="0.8"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         >
-        //Name and Surname
-        <TextView
-            android:layout_width="match_parent"
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="1"
-            android:text="Имя Фамилия"
+            android:id="@+id/my_order_tab"
+            android:text="order" />
 
-            android:textSize="24sp"
-            android:paddingLeft="10sp"
-            android:paddingTop="0sp"
-            android:paddingRight="5sp"
-            android:paddingBottom="0sp"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:id="@+id/account_tab"
+            android:text="account" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/star" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check_order_tab"
+            android:text="deliver_order" />
 
-            <TextView
-                android:layout_width="0sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:text=""
-                android:textColor="@color/purple_500"
-                android:textSize="25sp"
-                android:id="@+id/text_view"
-                android:gravity="left"/>
-        </LinearLayout>
-    </LinearLayout>
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:id="@+id/list_view"
-        android:padding="10dp"
-        android:dividerHeight="0sp"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:text=""
-        android:textSize="24sp"
-        android:id="@+id/text_edit_user"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:orientation="horizontal">
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="8"
-            android:text=""
-            android:textSize="24sp"
-            android:id="@+id/text_edit"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:text=""
-            android:textSize="48sp"
-            android:id="@+id/send_button"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="settings"
+            android:id="@+id/settings_tab"
             />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_weight="0.75"
-        android:orientation="horizontal"
-        android:background="@color/top_panel_menu">
-
-        <ImageButton
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/make_order"
-            android:background="#00000000"
-            android:scaleType="fitCenter"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:id="@+id/to_do_order_button"/>
-
-        <ImageButton
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/account"
-            android:background="#00000000"
-            android:scaleType="fitCenter"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:id="@+id/activity_main"/>
-
-        <ImageButton
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/delivery"
-            android:background="#00000000"
-            android:scaleType="fitCenter"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:id="@+id/to_check_orders_button"/>
-
-        <ImageButton
-            android:layout_weight="1"
-            android:layout_width="0sp"
-            android:layout_height="match_parent"
-            android:src="@drawable/settings"
-            android:background="#00000000"
-            android:scaleType="fitCenter"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:id="@+id/settings_button"/>
-    </LinearLayout>
+    </com.google.android.material.tabs.TabLayout>
 
 </LinearLayout>
