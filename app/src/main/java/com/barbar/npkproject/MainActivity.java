@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     TabItem settings;
     public ViewPager tabPager;
 
-/// sdlkfndlvj
+    /// test 123
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -46,12 +46,7 @@ public class MainActivity extends AppCompatActivity {
         my_order = findViewById(R.id.my_order_tab);
         account = findViewById(R.id.account_tab);
         check_order = findViewById(R.id.check_order_tab);
-/*
-/*        textView = findViewById(R.id.text_view);
-        editTextField = findViewById(R.id.text_edit);
-        sendButton = findViewById(R.id.send_button);
-        textViewUser = findViewById(R.id.text_edit_user);
-*/
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -69,100 +64,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*listView = findViewById(R.id.list_view);
-        MarkAdapter adapter = new MarkAdapter(this);
-        listView.setAdapter(adapter);
-
-        myRef.child(getLogin()).child("rating").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                try {
-                    JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
-
-                    users.add(new User(object.get("value").toString(), object.get("login").toString()));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
-        });
-
-
-
-        myBase = new Database(database.getReference("users").child(getLogin()), this);
-
-        updateResultField();
-
-        sendButton.setOnClickListener(view -> {
-            String messageValue = editTextField.getText().toString();
-            updateResultField();
-            if (messageValue.equals("")) {
-                Toast.makeText(getApplicationContext(), "Введите число", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            try {
-                double num = Double.parseDouble(messageValue);
-
-                if (num < 1 || num > 5) {
-                    Toast.makeText(getApplicationContext(), "Введите число от 1 до 5", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String myRating = (String) textView.getText();
-                if (myRating.equals("NaN")) {
-                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + " 1 " + new Date().getTime());
-                } else {
-                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + " " + myRating + " " + new Date().getTime());
-                }
-                textViewUser.setText("");
-                editTextField.setText("");
-                updateResultField();
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
-            }
-        });*/
     }
 
-/*    private class User {
-        public  String from_who;
-        public  String mark;
-
-        public User(String from_who, String mark) {
-            this.from_who = from_who;
-            this.mark = mark;
-        }
-    }
-
-    private class MarkAdapter extends ArrayAdapter<User> {
-
-        public MarkAdapter(Context context) {
-            super(context, R.layout.mark_items, users);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View some_view = inflater.inflate(R.layout.mark_items, parent, false);
-            TextView mark_us = (TextView) some_view.findViewById(R.id.user_mark);
-            TextView us_id = (TextView) some_view.findViewById(R.id.id_user);
-            mark_us.setText(users.get(position).mark);
-            us_id.setText(users.get(position).from_who);
-
-            return some_view;
-        }
-    }
-*/
     public class PagerAdapter extends FragmentPagerAdapter{
 
         private int numOfTabs;
