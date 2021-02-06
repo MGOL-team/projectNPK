@@ -1,6 +1,7 @@
 package com.barbar.npkproject.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barbar.npkproject.R;
@@ -40,7 +42,7 @@ public class DeliverOrder extends Fragment {
     DatabaseReference myRef = database.getReference("orders_list");
 
     ListView listView;
-
+    List<Order> orders = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,9 +90,7 @@ public class DeliverOrder extends Fragment {
         View view = inflater.inflate(R.layout.fragment_deliver_order, container, false);
 
         listView = view.findViewById(R.id.list_view);
-        List<String> list_of_orders = new ArrayList<>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext() ,
-                android.R.layout.simple_list_item_1, list_of_orders);
+        DeliverAdapter adapter = new DeliverAdapter(getContext());
         listView.setAdapter(adapter);
 
         myRef.addChildEventListener(new ChildEventListener() {
@@ -99,12 +99,14 @@ public class DeliverOrder extends Fragment {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
                     if (object.get("comments").toString().length() > 5) {
-                        list_of_orders.add(object.get("items").toString() + "\nАдрес: " +
+                        orders.add(new Order("Товар: " + object.get("items").toString() + "\nАдрес: " +
                                 object.get("address").toString() + "\nКомментарий: " +
-                                object.get("comments").toString());
+                                object.get("comments").toString(),
+                                "Name"));
                     } else {
-                        list_of_orders.add(object.get("items").toString() + "\nАдрес: " +
-                                object.get("address").toString());
+                        orders.add(new Order("Товар: " + object.get("items").toString() + "\nАдрес: " +
+                                        object.get("address").toString(),
+                                        "Name"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -138,5 +140,35 @@ public class DeliverOrder extends Fragment {
             }
         });
         return view;
+    }
+
+    private class Order {
+        public  String from_who;
+        public  String what;
+
+        public Order(String what, String from_who) {
+            this.from_who = from_who;
+            this.what = what;
+        }
+    }
+
+    private class DeliverAdapter extends ArrayAdapter<Order> {
+
+        public DeliverAdapter(Context context) {
+            super(context, R.layout.order_items, orders);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View some_view = inflater.inflate(R.layout.order_items, parent, false);
+            TextView us_id =  some_view.findViewById(R.id.user_id);
+            TextView order =  some_view.findViewById(R.id.order_text);
+            order.setText(orders.get(position).what);
+            us_id.setText(orders.get(position).from_who);
+
+            return some_view;
+        }
     }
 }
