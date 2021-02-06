@@ -43,7 +43,6 @@ public class AllDeliverOrder extends Fragment {
 
     ListView listView;
     List<Order> orders = new ArrayList<>();
-    private Button accept_button;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,7 +92,6 @@ public class AllDeliverOrder extends Fragment {
         listView = view.findViewById(R.id.list_view);
         DeliverAdapter adapter = new DeliverAdapter(getContext());
         listView.setAdapter(adapter);
-        accept_button = view.findViewById(R.id.accept_botton);
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -140,14 +138,6 @@ public class AllDeliverOrder extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), view.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
-
-        accept_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                    //mainActivity.tabPager.setCurrentItem(4);
-                }
         });
 
         return view;
