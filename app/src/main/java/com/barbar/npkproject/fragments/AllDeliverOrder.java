@@ -98,16 +98,13 @@ public class AllDeliverOrder extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
-                    if (object.get("comments").toString().length() > 5) {
-                        orders.add(new Order("Товар: " + object.get("items").toString() + "\nАдрес: " +
-                                object.get("address").toString() + "\n" +
-                                object.get("comments").toString(),
-                                "Name"));
-                    } else {
-                        orders.add(new Order("Товар: " + object.get("items").toString() + "\nАдрес: " +
-                                        object.get("address").toString(),
-                                        "Name"));
-                    }
+                    orders.add(new Order(
+                            object.get("login").toString(),
+                            object.get("items").toString(),
+                            snapshot.getKey(),
+                            object.get("address").toString(),
+                            object.get("comments").toString()
+                    ));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -143,13 +140,19 @@ public class AllDeliverOrder extends Fragment {
         return view;
     }
 
-    private class Order {
-        public  String from_who;
-        public  String what;
+    public class Order {
+        public String from_who;
+        public String what;
+        public String key;
+        public String address;
+        public String comments;
 
-        public Order(String what, String from_who) {
+        public Order(String from_who, String what, String key, String address, String comments) {
             this.from_who = from_who;
             this.what = what;
+            this.key = key;
+            this.address = address;
+            this.comments = comments;
         }
     }
 
