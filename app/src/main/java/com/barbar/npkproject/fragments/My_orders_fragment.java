@@ -121,7 +121,6 @@ public class My_orders_fragment extends Fragment {
                     myRef.child(getLogin()).setValue(data.toString());
 
                     mainActivity.tabPager.setCurrentItem(4);
-                    Toast.makeText(getContext(), "Toast", Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -137,6 +137,6 @@ public class DeliverOrder extends Fragment {
                 Toast.makeText(getContext(), view.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-        return inflater.inflate(R.layout.fragment_deliver_order, container, false);
+        return view;
     }
 }

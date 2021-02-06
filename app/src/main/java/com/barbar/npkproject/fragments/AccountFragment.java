@@ -172,7 +172,7 @@ public class AccountFragment extends Fragment {
                 Toast.makeText(getActivity(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
             }
         });
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        return viewew;
 
     }
 
