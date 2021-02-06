@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.barbar.npkproject.fragments.AccountFragment;
-import com.barbar.npkproject.fragments.My_orders_fragment;
+import com.barbar.npkproject.fragments.MyOrdersFragment;
 import com.barbar.npkproject.fragments.SettingsFragment;
 import com.barbar.npkproject.fragments.delivery_swap;
 import com.google.android.material.tabs.TabLayout;
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return new AccountFragment();
                 case 1:
-                    return new My_orders_fragment(MainActivity.this);
+                    return new MyOrdersFragment(MainActivity.this);
                 case 2:
                     return new delivery_swap();
                 case 3:
