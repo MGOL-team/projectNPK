@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_gravity="top"
-            android:layout_weight="2.8"
+            android:layout_weight="2"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/no_photo" />
 
@@ -33,15 +33,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="top"
                 android:layout_weight="1"
                 android:text="Имя Фамилия"
 
                 android:textSize="24sp"
                 android:paddingLeft="10sp"
-                android:paddingTop="0sp"
-                android:paddingRight="5sp"
-                android:paddingBottom="0sp"/>
+                android:paddingRight="5sp"/>
 
 
             <LinearLayout
@@ -81,7 +79,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="0"
             android:text=""
             android:textSize="24sp"
             android:id="@+id/text_edit_user"/>
@@ -89,7 +87,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="0"
             android:orientation="horizontal">
 
             <EditText

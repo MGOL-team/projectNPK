@@ -120,7 +120,7 @@ public class My_orders_fragment extends Fragment {
                     saveText(data.toString());
                     myRef.child(getLogin()).setValue(data.toString());
 
-                    mainActivity.tabPager.setCurrentItem(4);
+                    //mainActivity.tabPager.setCurrentItem(4);
                 }
             }
         });

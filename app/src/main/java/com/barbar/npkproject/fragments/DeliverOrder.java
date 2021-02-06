@@ -100,7 +100,7 @@ public class DeliverOrder extends Fragment {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
                     if (object.get("comments").toString().length() > 5) {
                         orders.add(new Order("Товар: " + object.get("items").toString() + "\nАдрес: " +
-                                object.get("address").toString() + "\nКомментарий: " +
+                                object.get("address").toString() + "\n" +
                                 object.get("comments").toString(),
                                 "Name"));
                     } else {
