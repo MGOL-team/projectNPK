@@ -1,6 +1,7 @@
 package com.barbar.npkproject.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -154,9 +157,24 @@ public class AllDeliverOrder extends Fragment {
             this.address = address;
             this.comments = comments;
         }
+
+        @Override
+        public String toString() {
+            JSONObject object = new JSONObject();
+            try {
+                object.put("login", from_who);
+                object.put("items", what);
+                object.put("address", address);
+                object.put("comments", comments);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return object.toString();
+        }
     }
 
     private class DeliverAdapter extends ArrayAdapter<Order> {
+
 
         public DeliverAdapter(Context context) {
             super(context, R.layout.order_items, orders);
@@ -169,10 +187,26 @@ public class AllDeliverOrder extends Fragment {
             View some_view = inflater.inflate(R.layout.order_items, parent, false);
             TextView us_id =  some_view.findViewById(R.id.user_id);
             TextView order =  some_view.findViewById(R.id.order_text);
+            Button acceptButton = some_view.findViewById(R.id.accept_button);
+
             order.setText(orders.get(position).what);
             us_id.setText(orders.get(position).from_who);
 
+            acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String key = orders.get(position).key;
+                    myRef.child(key).removeValue();
+                    database.getReference("users").child(getLogin()).child("accepted_orders").push().setValue(orders.get(position).toString());
+                }
+            });
+
             return some_view;
         }
+    }
+
+    private String getLogin () {
+        SharedPreferences sPref = Objects.requireNonNull(this.getActivity()).getSharedPreferences("MyPref", MODE_PRIVATE);
+        return sPref.getString("login", "COMMON TEXT");
     }
 }

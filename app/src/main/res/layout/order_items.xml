@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="0.6"
-                android:id="@+id/accept_botton"
+                android:id="@+id/accept_button"
                 android:text="ПРИНЯТЬ"
                 android:textSize="20sp" />
     </LinearLayout>
