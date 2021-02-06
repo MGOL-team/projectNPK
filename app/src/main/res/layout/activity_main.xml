@@ -20,6 +20,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:textColor="@color/white"
             android:text="@string/error_text"
 
             android:textSize="24sp"
