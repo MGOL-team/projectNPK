@@ -13,11 +13,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.barbar.npkproject.fragments.AccountFragment;
-import com.barbar.npkproject.fragments.DeliverOrder;
 import com.barbar.npkproject.fragments.My_orders_fragment;
 import com.barbar.npkproject.fragments.SettingsFragment;
-import com.barbar.npkproject.fragments.fragment_confirm;
-import com.google.android.material.tabs.TabItem;
+import com.barbar.npkproject.fragments.delivery_swap;
 import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public class PagerAdapter extends FragmentPagerAdapter{
+    private class PagerAdapter extends FragmentPagerAdapter{
 
         private int numOfTabs;
 
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new My_orders_fragment(MainActivity.this);
                 case 2:
-                    return new DeliverOrder();
+                    return new delivery_swap();
                 case 3:
                     return new SettingsFragment();
                 default:

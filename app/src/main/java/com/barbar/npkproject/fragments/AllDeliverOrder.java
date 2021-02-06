@@ -1,6 +1,5 @@
 package com.barbar.npkproject.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -13,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,16 +33,17 @@ import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DeliverOrder#newInstance} factory method to
+ * Use the {@link AllDeliverOrder#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DeliverOrder extends Fragment {
+public class AllDeliverOrder extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("orders_list");
 
     ListView listView;
     List<Order> orders = new ArrayList<>();
+    private Button accept_button;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,7 +54,7 @@ public class DeliverOrder extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public DeliverOrder() {
+    public AllDeliverOrder() {
         // Required empty public constructor
     }
 
@@ -66,8 +67,8 @@ public class DeliverOrder extends Fragment {
      * @return A new instance of fragment DeliverOrder.
      */
     // TODO: Rename and change types and number of parameters
-    public static DeliverOrder newInstance(String param1, String param2) {
-        DeliverOrder fragment = new DeliverOrder();
+    public static AllDeliverOrder newInstance(String param1, String param2) {
+        AllDeliverOrder fragment = new AllDeliverOrder();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -92,6 +93,7 @@ public class DeliverOrder extends Fragment {
         listView = view.findViewById(R.id.list_view);
         DeliverAdapter adapter = new DeliverAdapter(getContext());
         listView.setAdapter(adapter);
+        accept_button = view.findViewById(R.id.accept_botton);
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -139,6 +141,15 @@ public class DeliverOrder extends Fragment {
                 Toast.makeText(getContext(), view.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        accept_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    //mainActivity.tabPager.setCurrentItem(4);
+                }
+        });
+
         return view;
     }
 
