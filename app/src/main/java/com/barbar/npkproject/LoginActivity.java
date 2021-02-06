@@ -31,6 +31,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText ETemail;
     private EditText ETpassword;
+    private EditText ETfirst_name;
+    private EditText ETsecond_name;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("users_list");
@@ -45,6 +47,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         ETemail = findViewById(R.id.et_email);
         ETpassword = findViewById(R.id.et_password);
+        ETfirst_name = findViewById(R.id.first_name);
+        ETsecond_name = findViewById(R.id.second_name);
 
         ETemail.setText(getLogin());
         ETpassword.setText(getPassword());
@@ -91,12 +95,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (email.startsWith("id_")) {
-            Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Данное имя пользователя запрещено", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (email.contains("?") || email.contains(" ")) {
-            Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Данное имя пользователя запрещено", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -130,6 +134,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void registration (String email, String password) {
 
+        String firstName = ETfirst_name.getText().toString();
+        String secondName = ETsecond_name.getText().toString();
+
+        if (firstName.length() < 2 || secondName.length() < 2) {
+            Toast.makeText(getApplicationContext(), "Пожалуйста, введите ваше имя и фамилию", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (email.contains("admin")) {
             Toast.makeText(getApplicationContext(), "Данное имя пользователя используется системой", Toast.LENGTH_LONG).show();
            // TODO redo ☻ return;
@@ -152,6 +164,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         try {
             data.put("login", email);
             data.put("password", hashFunction(password));
+            data.put("first_name", firstName);
+            data.put("second_name", secondName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -169,17 +183,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString("login", ETemail.getText().toString());
         ed.putString("password", ETpassword.getText().toString());
+        ed.putString("first_name", ETfirst_name.getText().toString());
+        ed.putString("second_name", ETsecond_name.getText().toString());
         ed.apply();
     }
 
     private String getLogin () {
         sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
-        return sPref.getString("login", "COMMON TEXT");
+        return sPref.getString("login", "");
     }
 
     private String getPassword () {
         sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
-        return sPref.getString("password", "COMMON TEXT");
+        return sPref.getString("password", "");
     }
 
     private String hashFunction (String password) {
@@ -187,13 +203,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(password.getBytes());
             return new String(messageDigest.digest());
-//            String hash;
-//            do {
-//                MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-//                messageDigest.update(password.getBytes());
-//                hash = new String(messageDigest.digest());
-//            } while (hash.contains(" ") || hash.contains("\"") || hash.contains("\\") || hash.contains(":"));
-//            return hash;
         } catch (Exception ignore) {
             return "Error in hashFunction";
         }

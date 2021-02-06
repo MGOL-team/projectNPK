@@ -18,10 +18,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link fragment_confirm#newInstance} factory method to
+ * Use the {@link FragmentConfirm#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class fragment_confirm extends Fragment {
+public class FragmentConfirm extends Fragment {
 
     private Button confirm_button;
 
@@ -37,7 +37,7 @@ public class fragment_confirm extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public fragment_confirm() {
+    public FragmentConfirm() {
         // Required empty public constructor
     }
 
@@ -50,8 +50,8 @@ public class fragment_confirm extends Fragment {
      * @return A new instance of fragment fragment_confirm.
      */
     // TODO: Rename and change types and number of parameters
-    public static fragment_confirm newInstance(String param1, String param2) {
-        fragment_confirm fragment = new fragment_confirm();
+    public static FragmentConfirm newInstance(String param1, String param2) {
+        FragmentConfirm fragment = new FragmentConfirm();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

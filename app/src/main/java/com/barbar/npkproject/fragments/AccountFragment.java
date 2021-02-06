@@ -54,6 +54,7 @@ public class AccountFragment extends Fragment {
     EditText editTextField;
     Button sendButton;
     TextView textViewUser;
+    TextView userName;
 
     ListView listView;
 
@@ -103,18 +104,19 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View viewew = inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
 
-        textView = viewew.findViewById(R.id.text_view);
-        editTextField = viewew.findViewById(R.id.text_edit);
-        sendButton = viewew.findViewById(R.id.send_button);
-        textViewUser = viewew.findViewById(R.id.text_edit_user);
+        textView = view.findViewById(R.id.text_view);
+        editTextField = view.findViewById(R.id.text_edit);
+        sendButton = view.findViewById(R.id.send_button);
+        textViewUser = view.findViewById(R.id.text_edit_user);
+        userName = view.findViewById(R.id.user_name);
 
-        listView = viewew.findViewById(R.id.list_view);
+        listView = view.findViewById(R.id.list_view);
         MarkAdapter adapter = new MarkAdapter(getContext());
         listView.setAdapter(adapter);
 
-
+        userName.setText(getFullName());
 
         myRef.child(getLogin()).child("rating").addChildEventListener(new ChildEventListener() {
             @Override
@@ -144,7 +146,7 @@ public class AccountFragment extends Fragment {
 
         updateResultField();
 
-        sendButton.setOnClickListener(view -> {
+        sendButton.setOnClickListener(v -> {
             String messageValue = editTextField.getText().toString();
             updateResultField();
             if (messageValue.equals("")) {
@@ -172,7 +174,7 @@ public class AccountFragment extends Fragment {
                 Toast.makeText(getActivity(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
             }
         });
-        return viewew;
+        return view;
 
     }
 
@@ -216,5 +218,10 @@ public class AccountFragment extends Fragment {
     private String getLogin () {
         SharedPreferences sPref = getActivity().getSharedPreferences("MyPref", MODE_PRIVATE);
         return sPref.getString("login", "COMMON TEXT");
+    }
+
+    private String getFullName () {
+        SharedPreferences sPref = getActivity().getSharedPreferences("MyPref", MODE_PRIVATE);
+        return sPref.getString("first_name", "COMMON TEXT") + " " + sPref.getString("second_name", "COMMON TEXT") ;
     }
 }
