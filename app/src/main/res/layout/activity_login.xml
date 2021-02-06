@@ -9,13 +9,37 @@
     >
 
     <EditText
-        android:id="@+id/et_email"
+        android:id="@+id/first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="100sp"
+
+        android:hint="@string/first_name"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/second_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="200sp"
+
+        android:hint="@string/second_name"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="300sp"
 
         android:hint="@string/text_email"
         android:textSize="30sp" />
@@ -24,10 +48,11 @@
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:password="true"
 
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="400dp"
 
         android:hint="@string/text_password"
         android:textSize="30sp" />

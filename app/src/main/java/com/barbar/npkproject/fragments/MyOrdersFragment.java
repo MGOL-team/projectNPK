@@ -30,10 +30,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link My_orders_fragment#newInstance} factory method to
+ * Use the {@link MyOrdersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class My_orders_fragment extends Fragment {
+public class MyOrdersFragment extends Fragment {
 
     private EditText ET_field_items;
     private EditText ET_field_address;
@@ -54,7 +54,7 @@ public class My_orders_fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public My_orders_fragment(MainActivity mainActivity) {
+    public MyOrdersFragment(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
         // Required empty public constructor
     }
@@ -68,8 +68,8 @@ public class My_orders_fragment extends Fragment {
      * @return A new instance of fragment my_orders_fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static My_orders_fragment newInstance(String param1, String param2) {
-        My_orders_fragment fragment = new My_orders_fragment(null);
+    public static MyOrdersFragment newInstance(String param1, String param2) {
+        MyOrdersFragment fragment = new MyOrdersFragment(null);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
