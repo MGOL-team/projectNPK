@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyOrdersFragment#newInstance} factory method to
+ * Use the {@link MakeOrderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyOrdersFragment extends Fragment {
+public class MakeOrderFragment extends Fragment {
 
     private EditText ET_field_items;
     private EditText ET_field_address;
@@ -54,8 +55,7 @@ public class MyOrdersFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MyOrdersFragment(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public MakeOrderFragment() {
         // Required empty public constructor
     }
 
@@ -68,8 +68,8 @@ public class MyOrdersFragment extends Fragment {
      * @return A new instance of fragment my_orders_fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyOrdersFragment newInstance(String param1, String param2) {
-        MyOrdersFragment fragment = new MyOrdersFragment(null);
+    public static MakeOrderFragment newInstance(String param1, String param2) {
+        MakeOrderFragment fragment = new MakeOrderFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -135,7 +135,10 @@ public class MyOrdersFragment extends Fragment {
                     saveText(data.toString());
                     myRef.child(getLogin()).setValue(data.toString());
 
-                    //mainActivity.tabPager.setCurrentItem(4);
+                    Fragment fragment = new FragmentConfirm();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.my_orders, fragment);
+                    ft.commit();
                 }
             }
         });

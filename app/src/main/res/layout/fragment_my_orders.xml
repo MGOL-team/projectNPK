@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/my_orders"
+    android:background="@color/white"
+    tools:context=".fragments.MyOrders">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <ImageButton
+        android:layout_width="40dp"
+        android:src="@drawable/plus"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:id="@+id/new_order_button"
+        android:layout_height="40dp"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list_view">
+
+    </ListView>
+    </LinearLayout>
+</FrameLayout>
