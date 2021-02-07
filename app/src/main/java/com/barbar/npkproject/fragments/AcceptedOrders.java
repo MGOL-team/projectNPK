@@ -43,8 +43,10 @@ public class AcceptedOrders extends Fragment {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("users");
 
+    DeliverAdapter adapter;
+
     ListView listView;
-    List<Order> orders = new ArrayList<>();
+    List<Order> orders;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,31 +89,28 @@ public class AcceptedOrders extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_deliver_order, container, false);
 
+        orders = new ArrayList<>();
+
         listView = view.findViewById(R.id.list_view);
-        DeliverAdapter adapter = new DeliverAdapter(getContext());
+        adapter = new DeliverAdapter(getContext());
         listView.setAdapter(adapter);
 
-        myRef.child(getLogin()).child("accepted_orders").addChildEventListener(new ChildEventListener() {
+        String login = getLogin();
+
+        database.getReference("orders_list").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 try {
-                    JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
-                    if (object.get("comments").toString().length() > 5) {
-                        orders.add(new Order("Товар: " + object.get("items").toString() + "\nАдрес: " +
-                                object.get("address").toString() + "\n" +
-                                object.get("comments").toString(),
-                                "Name"));
-                    } else {
-                        orders.add(new Order("Товар: " + object.get("items").toString() + "\nАдрес: " +
-                                object.get("address").toString(),
-                                "Name"));
+                    JSONObject object = new JSONObject(snapshot.getValue(String.class));
+                    if (object.get("courier").toString().equals(login)) {
+                        orders.add(new Order(object.get("items").toString(), object.get("login").toString()));
                     }
+
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Toast.makeText(getContext(), "" + e.toString(), Toast.LENGTH_LONG).show();
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -136,6 +135,7 @@ public class AcceptedOrders extends Fragment {
 
             }
         });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), view.toString(), Toast.LENGTH_SHORT).show();

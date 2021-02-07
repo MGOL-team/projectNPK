@@ -268,7 +268,7 @@ public class MyOrders extends Fragment {
            acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Fragment fragment = new PutMark();
+                    Fragment fragment = new PutMark(orders.get(position).from_who);
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.my_orders, fragment);
                     ft.commit();

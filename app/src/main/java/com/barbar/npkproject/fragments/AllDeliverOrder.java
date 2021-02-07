@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -137,6 +138,7 @@ public class AllDeliverOrder extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_deliver_order, container, false);
 
+
         listView = view.findViewById(R.id.list_view);
         adapter = new DeliverAdapter(getContext());
         listView.setAdapter(adapter);
@@ -192,19 +194,34 @@ public class AllDeliverOrder extends Fragment {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View some_view = inflater.inflate(R.layout.order_items, parent, false);
-            TextView us_id =  some_view.findViewById(R.id.user_id);
-            TextView order =  some_view.findViewById(R.id.order_text);
+            TextView us_id = some_view.findViewById(R.id.user_id);
+            TextView orderField = some_view.findViewById(R.id.order_text);
             Button acceptButton = some_view.findViewById(R.id.accept_button);
 
-            order.setText(orders.get(position).what);
+            orderField.setText(orders.get(position).what);
             us_id.setText(orders.get(position).from_who);
 
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String key = orders.get(position).key;
-                    myRef.child(key).removeValue();
-                    database.getReference("users").child(getLogin()).child("accepted_orders").push().setValue(orders.get(position).toString());
+                    Order order = orders.get(position);
+                    myRef.child(order.key).removeValue();
+
+                    JSONObject object = new JSONObject();
+                    try {
+                        object.put("items", order.what);
+                        object.put("address", order.address);
+                        object.put("comments", order.comments);
+                        object.put("login", order.from_who);
+                        object.put("type", "estimator");
+                        object.put("courier", getLogin());
+                        object.put("status", "delivered");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    myRef.child(order.key).setValue(object.toString());
+
                     orders.remove(position);
                 }
             });

@@ -143,11 +143,18 @@ public class MakeOrderFragment extends Fragment {
                         data.put("comments", ET_field_comments.getText().toString());
                         data.put("login", getLogin());
                         data.put("type", "estimator");
+                        data.put("courier", "");
+                        /// TODO another status
+                        data.put("status", "paid");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     saveText(data.toString());
-                    myRef.child(getLogin()).setValue(data.toString());
+
+                    // TODO recomment
+                    //myRef.child(getLogin()).setValue(data.toString());
+
+                    database.getReference("orders_list").push().setValue(data.toString());
 
                     Fragment fragment = new FragmentConfirm();
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();

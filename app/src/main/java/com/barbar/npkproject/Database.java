@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.barbar.npkproject.fragments.AccountFragment;
 import com.google.firebase.database.ChildEventListener;
@@ -29,8 +30,8 @@ public class Database {
         allDataMap.put("rating", new ArrayList<>());
     }
 
-    public Database(DatabaseReference myRef, AccountFragment accountFragment) {
-        this.accountFragment = accountFragment;
+    public Database(DatabaseReference myRef, Fragment accountFragment) {
+        this.accountFragment = (AccountFragment) accountFragment;
         allDataMap = new HashMap<>();
 
         initializeListsOfMaps();
