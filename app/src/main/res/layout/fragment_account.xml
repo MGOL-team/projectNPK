@@ -68,10 +68,10 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="1"
+            android:scrollbars="none"
             android:id="@+id/list_view"
             android:padding="10dp"
-            android:dividerHeight="0sp"
             />
 
         <EditText

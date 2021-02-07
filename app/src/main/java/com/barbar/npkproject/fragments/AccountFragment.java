@@ -201,7 +201,7 @@ public class AccountFragment extends Fragment {
             View some_view = inflater.inflate(R.layout.mark_items, parent, false);
             TextView mark_us =  some_view.findViewById(R.id.user_mark);
             TextView us_id =  some_view.findViewById(R.id.id_user);
-            mark_us.setText(users.get(position).mark);
+            mark_us.setText('@' + users.get(position).mark);
             us_id.setText(users.get(position).from_who);
 
             return some_view;
