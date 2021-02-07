@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
                 if (user_names_list.get(user_names_list.size() - 1).equals(ETemail.getText().toString()) &&
-                        user_passes_list.get(user_passes_list.size() - 1).equals(hashFunction(ETpassword.getText().toString()))) {
+                        user_passes_list.get(user_passes_list.size() - 1).equals(hashFunction(ETpassword.getText().toString() + ETemail.getText().toString()))) {
                     goToNextPage();
                 }
             }
@@ -121,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean successLogReg = false;
 
     private void signing (String email, String password) {
-        password = hashFunction(password);
+        password = hashFunction(password + email);
         for (int i = 0;i < user_names_list.size();i++) {
             if (email.equals(user_names_list.get(i)) && password.equals(user_passes_list.get(i))) {
                 Toast.makeText(getApplicationContext(), "singing", Toast.LENGTH_SHORT).show();
@@ -152,7 +153,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         successLogReg = true;
 
         for (int i = 0;i < user_names_list.size();i++) {
-            Toast.makeText(getApplicationContext(), "Iteration : " + i, Toast.LENGTH_LONG).show();
             if (email.equals(user_names_list.get(i))) {
                 Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_LONG).show();
                 successLogReg = false;
@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         JSONObject data = new JSONObject();
         try {
             data.put("login", email);
-            data.put("password", hashFunction(password));
+            data.put("password", hashFunction(password + email));
             data.put("first_name", firstName);
             data.put("second_name", secondName);
         } catch (JSONException e) {
