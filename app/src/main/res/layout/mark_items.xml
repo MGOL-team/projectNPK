@@ -43,6 +43,6 @@
         android:paddingStart="5dp"
         android:textSize="16dp"
         android:text="Это было великолепно"
-        android:id="@+id/komment"
+        android:id="@+id/user_comment"
         />
 </LinearLayout>
