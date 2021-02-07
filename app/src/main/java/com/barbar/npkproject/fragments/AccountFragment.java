@@ -108,8 +108,6 @@ public class AccountFragment extends Fragment {
 
         textView = view.findViewById(R.id.text_view);
         editTextField = view.findViewById(R.id.text_edit);
-        sendButton = view.findViewById(R.id.send_button);
-        textViewUser = view.findViewById(R.id.text_edit_user);
         userName = view.findViewById(R.id.user_name);
 
         listView = view.findViewById(R.id.list_view);

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.PutMark"
+    android:paddingTop="15dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="15dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:background="@null"
+                android:id="@+id/star_1"
+                android:src="@drawable/star"/>
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:background="@null"
+                android:id="@+id/star_2"
+                android:src="@drawable/star"/>
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:background="@null"
+                android:id="@+id/star_3"
+                android:src="@drawable/star"/>
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:background="@null"
+                android:id="@+id/star_4"
+                android:src="@drawable/star"/>
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="fitXY"
+                android:background="@null"
+                android:id="@+id/star_5"
+                android:src="@drawable/star"/>
+        </LinearLayout>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Напишите комментарий"
+        android:textSize="24sp"
+        android:id="@+id/text_edit"/>
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Оценить"
+        android:textSize="24dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/mark_button"
+        />
+</FrameLayout>
