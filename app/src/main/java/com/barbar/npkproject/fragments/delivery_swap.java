@@ -94,6 +94,7 @@ public class delivery_swap extends Fragment {
 
             }
         });
+        orderLayout.setupWithViewPager(orderPager);
         // Inflate the layout for this fragment
         return view;
     }
@@ -116,6 +117,17 @@ public class delivery_swap extends Fragment {
                     return new AllDeliverOrder();
                 case 1:
                     return new AcceptedOrders();
+                default:
+                    return null;
+            }
+        }
+
+        public CharSequence getPageTitle(int position) {
+            switch (position){
+                case 0:
+                    return "ВСЕ";
+                case 1:
+                    return "ПРИНЯТЫЕ";
                 default:
                     return null;
             }

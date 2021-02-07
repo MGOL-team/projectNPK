@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         tabPager = findViewById(R.id.tabPager);
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         tabPager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(tabPager);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -53,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        int[] imageResId = {
+                R.drawable.account, R.drawable.make_order, R.drawable.delivery, R.drawable.settings
+        };
+
+        for (int i = 0; i < imageResId.length; i++) {
+            tabLayout.getTabAt(i).setIcon(imageResId[i]);
+        }
 
     }
 
@@ -77,6 +86,21 @@ public class MainActivity extends AppCompatActivity {
                     return new delivery_swap();
                 case 3:
                     return new SettingsFragment();
+                default:
+                    return null;
+            }
+        }
+
+        public CharSequence getPageTitle(int position) {
+            switch (position){
+                case 0:
+                    return "АККАУНТ";
+                case 1:
+                    return "ЗАКАЗАТЬ";
+                case 2:
+                    return "ДОСТАВИТЬ";
+                case 3:
+                    return "НАСТРОЙКИ";
                 default:
                     return null;
             }
