@@ -178,6 +178,7 @@ public class AccountFragment extends Fragment {
     private class User {
         public  String from_who;
         public  String mark;
+        public  String comment;
 
         public User(String from_who, String mark) {
             this.from_who = from_who;
@@ -198,6 +199,8 @@ public class AccountFragment extends Fragment {
             View some_view = inflater.inflate(R.layout.mark_items, parent, false);
             TextView mark_us =  some_view.findViewById(R.id.user_mark);
             TextView us_id =  some_view.findViewById(R.id.id_user);
+            TextView us_comment =  some_view.findViewById(R.id.user_comment);
+            us_comment.setText(users.get(position).comment);
             mark_us.setText('@' + users.get(position).mark);
             us_id.setText(users.get(position).from_who);
 

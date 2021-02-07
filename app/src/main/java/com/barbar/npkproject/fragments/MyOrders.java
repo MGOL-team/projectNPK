@@ -208,11 +208,13 @@ public class MyOrders extends Fragment {
             TextView order_name =  some_view.findViewById(R.id.order_name);
             TextView order_address =  some_view.findViewById(R.id.order_adres);
             TextView order_comment =  some_view.findViewById(R.id.comment_text);
+            TextView order_status =  some_view.findViewById(R.id.order_status);
             Button acceptButton = some_view.findViewById(R.id.accept_button);
 
             order_name.setText("Товар: " + orders.get(position).what);
             order_address.setText("Адрес: " + orders.get(position).address);
             order_comment.setText(orders.get(position).comments);
+            order_status.setText("Статус: " + "в обработке");
 
             return some_view;
         }
