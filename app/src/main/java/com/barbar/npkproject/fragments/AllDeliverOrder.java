@@ -44,6 +44,8 @@ public class AllDeliverOrder extends Fragment {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("orders_list");
 
+    DeliverAdapter adapter;
+
     ListView listView;
     List<Order> orders = new ArrayList<>();
 
@@ -85,19 +87,8 @@ public class AllDeliverOrder extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_deliver_order, container, false);
-
-        listView = view.findViewById(R.id.list_view);
-        DeliverAdapter adapter = new DeliverAdapter(getContext());
-        listView.setAdapter(adapter);
 
         String login = getLogin();
-
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -112,7 +103,10 @@ public class AllDeliverOrder extends Fragment {
                                 object.get("comments").toString()
                         ));
                     }
-                    adapter.notifyDataSetChanged();
+
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -138,6 +132,16 @@ public class AllDeliverOrder extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_deliver_order, container, false);
+
+        listView = view.findViewById(R.id.list_view);
+        adapter = new DeliverAdapter(getContext());
+        listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), view.toString(), Toast.LENGTH_SHORT).show();
