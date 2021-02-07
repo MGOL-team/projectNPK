@@ -106,6 +106,8 @@ public class AllDeliverOrder extends Fragment {
 
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getContext(), "Adapter == null", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -124,12 +126,9 @@ public class AllDeliverOrder extends Fragment {
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
