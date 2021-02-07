@@ -50,7 +50,9 @@ public class AccountFragment extends Fragment {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("users");
 
-    static TextView textView;
+    MarkAdapter adapter;
+
+    TextView textView;
     EditText editTextField;
     Button sendButton;
     TextView textViewUser;
@@ -73,15 +75,6 @@ public class AccountFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccountFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AccountFragment newInstance(String param1, String param2) {
         AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
@@ -98,6 +91,32 @@ public class AccountFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        myRef.child(getLogin()).child("rating").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                try {
+                    JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
+                    users.add(new User(object.get("value").toString(), object.get("login").toString()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
 
     @Override
@@ -113,34 +132,12 @@ public class AccountFragment extends Fragment {
         userName = view.findViewById(R.id.user_name);
 
         listView = view.findViewById(R.id.list_view);
-        MarkAdapter adapter = new MarkAdapter(getContext());
+        adapter = new MarkAdapter(getContext());
         listView.setAdapter(adapter);
 
         userName.setText(getFullName());
 
-        myRef.child(getLogin()).child("rating").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                try {
-                    JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
 
-                    users.add(new User(object.get("value").toString(), object.get("login").toString()));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
-        });
 
         myBase = new Database(database.getReference("users").child(getLogin()),  this);
 
@@ -209,7 +206,7 @@ public class AccountFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    public static void updateResultField() {
+    public void updateResultField() {
         List<JSONObject> ratingList = myBase.getAllDataMap().get("rating");
 
         textView.setText(new DataAnalyze().getResult(ratingList));

@@ -52,6 +52,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         ETemail.setText(getLogin());
         ETpassword.setText(getPassword());
+        ETfirst_name.setText(getFirstName());
+        ETsecond_name.setText(getSecondName());
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -196,6 +198,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String getPassword () {
         sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
         return sPref.getString("password", "");
+    }
+
+    private String getFirstName () {
+        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+        return sPref.getString("first_name", "");
+    }
+
+    private String getSecondName () {
+        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+        return sPref.getString("second_name", "");
     }
 
     private String hashFunction (String password) {

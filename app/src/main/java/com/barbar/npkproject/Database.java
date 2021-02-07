@@ -1,5 +1,7 @@
 package com.barbar.npkproject;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -44,7 +46,8 @@ public class Database {
                     allDataMap.get("rating").add(new JSONObject(data));
                 } catch (JSONException ignore) {
                 }
-                AccountFragment.updateResultField();
+                accountFragment.updateResultField();
+                //Toast.makeText(accountFragment.getContext(), snapshot + "", Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -96,22 +96,26 @@ public class AllDeliverOrder extends Fragment {
         DeliverAdapter adapter = new DeliverAdapter(getContext());
         listView.setAdapter(adapter);
 
+        String login = getLogin();
+
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
-                    orders.add(new Order(
-                            object.get("login").toString(),
-                            object.get("items").toString(),
-                            snapshot.getKey(),
-                            object.get("address").toString(),
-                            object.get("comments").toString()
-                    ));
+                    if (!object.get("login").toString().equals(login)) {
+                        orders.add(new Order(
+                                object.get("login").toString(),
+                                object.get("items").toString(),
+                                snapshot.getKey(),
+                                object.get("address").toString(),
+                                object.get("comments").toString()
+                        ));
+                    }
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override

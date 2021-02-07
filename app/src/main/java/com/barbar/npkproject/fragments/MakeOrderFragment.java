@@ -19,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.IndoorBuilding;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -113,8 +114,21 @@ public class MakeOrderFragment extends Fragment {
                         googleMap.addMarker(markerOptions);
                     }
                 });
+                googleMap.setOnIndoorStateChangeListener(new GoogleMap.OnIndoorStateChangeListener() {
+                    @Override
+                    public void onIndoorBuildingFocused() {
+                        IndoorBuilding building = googleMap.getFocusedBuilding();
+                        Toast.makeText(getContext(), "" + building.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onIndoorLevelActivated(IndoorBuilding indoorBuilding) {
+
+                    }
+                });
             }
         });
+
 
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
