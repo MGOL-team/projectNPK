@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="top_panel_menu">#CEE3AA47</color>
+    <color name="sub_color">#8A775925</color>
     <color name="grey">#959595</color>
 </resources>

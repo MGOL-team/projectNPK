@@ -1,36 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
+    android:background="@color/top_panel_menu"
     >
 
-    <EditText
-        android:id="@+id/first_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="100sp"
-
-        android:hint="@string/first_name"
-        android:textSize="30sp" />
-
-    <EditText
-        android:id="@+id/second_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="200sp"
-
-        android:hint="@string/second_name"
-        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/et_email"
@@ -39,7 +17,7 @@
 
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="300sp"
+        android:layout_marginTop="300dp"
 
         android:hint="@string/text_email"
         android:textSize="30sp" />
@@ -52,7 +30,7 @@
 
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="10dp"
 
         android:hint="@string/text_password"
         android:textSize="30sp" />
@@ -62,24 +40,54 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp">
+        android:layout_marginTop="20dp">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/text_Log"
-            android:textSize="24sp"
+            android:textSize="16sp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/sub_color"
             android:id="@+id/button_log"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_Reg"
-            android:textSize="24sp"
+            android:text="Регистрация"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/sub_color"
+            android:textSize="16sp"
+            android:layout_marginRight="15dp"
             android:id="@+id/button_reg"/>
 
     </LinearLayout>
+    <EditText
+        android:id="@+id/first_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
 
-</RelativeLayout>
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="100sp"
+
+        android:hint="@string/first_name"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/second_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="200sp"
+
+        android:hint="@string/second_name"
+        android:textSize="30sp" />
+</LinearLayout>
+
+
