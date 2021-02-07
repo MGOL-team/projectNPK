@@ -103,6 +103,7 @@ public class AllDeliverOrder extends Fragment {
                                 object.get("comments").toString()
                         ));
                     }
+
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
@@ -134,16 +135,12 @@ public class AllDeliverOrder extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_deliver_order, container, false);
 
         listView = view.findViewById(R.id.list_view);
         adapter = new DeliverAdapter(getContext());
         listView.setAdapter(adapter);
-
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
