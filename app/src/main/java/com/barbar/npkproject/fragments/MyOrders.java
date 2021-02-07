@@ -200,12 +200,16 @@ public class MyOrders extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View some_view = inflater.inflate(R.layout.order_items, parent, false);
-            TextView us_id =  some_view.findViewById(R.id.user_id);
-            TextView order =  some_view.findViewById(R.id.order_text);
+            View some_view = inflater.inflate(R.layout.my_orders_item, parent, false);
+            TextView order_name =  some_view.findViewById(R.id.order_name);
+            TextView order_address =  some_view.findViewById(R.id.order_adres);
+            TextView order_comment =  some_view.findViewById(R.id.comment_text);
             Button acceptButton = some_view.findViewById(R.id.accept_button);
 
-            order.setText(orders.get(position).what);
+            order_name.setText("Товар: " + orders.get(position).what);
+            order_address.setText("Адрес: " + orders.get(position).address);
+            order_comment.setText(orders.get(position).comments);
+
             return some_view;
         }
     }
