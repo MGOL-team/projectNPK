@@ -11,6 +11,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Статус:"
+        android:id="@+id/status"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="5dp"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Товар:"
         android:id="@+id/order_name"
         android:paddingStart="5dp"
@@ -18,38 +29,28 @@
         android:paddingEnd="5dp"
         android:paddingBottom="5dp"
         android:textSize="16dp"/>
+
     <TextView
+        android:id="@+id/order_adres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/order_adres"
-        android:text="Адрес:"
         android:paddingStart="5dp"
         android:paddingTop="5dp"
         android:paddingEnd="5dp"
         android:paddingBottom="5dp"
-        android:textSize="16dp"/>
+        android:text="Адрес:"
+        android:textSize="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Коментарий"
+        android:text="Коментарий\т"
         android:id="@+id/comment_text"
         android:paddingStart="5dp"
         android:paddingTop="5dp"
         android:paddingEnd="5dp"
         android:paddingBottom="5dp"
         android:textSize="16dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Статус:"
-            android:id="@+id/status"
-            android:paddingStart="5dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="5dp"
-            android:paddingBottom="5dp"
-            android:textSize="16dp"/>
 
     <Button
         android:layout_width="wrap_content"
