@@ -44,7 +44,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class MyOrders extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("orders_list");
+    DatabaseReference myRef;
 
     DeliverAdapter adapter;
 
@@ -94,7 +94,7 @@ public class MyOrders extends Fragment {
 
         String login = getLogin();
 
-        myRef.addChildEventListener(new ChildEventListener() {
+        database.getReference("orders_list").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 try {
@@ -105,7 +105,8 @@ public class MyOrders extends Fragment {
                                 object.get("items").toString(),
                                 snapshot.getKey(),
                                 object.get("address").toString(),
-                                object.get("comments").toString()
+                                object.get("comments").toString(),
+                                "Оплачено"
                         ));
                     }
                     if (adapter != null) {
@@ -131,6 +132,46 @@ public class MyOrders extends Fragment {
 
             }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        database.getReference("temp_orders_list").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                try {
+                    JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
+                    if (object.get("login").toString().equals(login)) {
+                        orders.add(new Order(
+                                object.get("login").toString(),
+                                object.get("items").toString(),
+                                snapshot.getKey(),
+                                object.get("address").toString(),
+                                object.get("comments").toString(),
+                                "Ожидает оплаты"
+                        ));
+                    }
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -175,13 +216,15 @@ public class MyOrders extends Fragment {
         public String key;
         public String address;
         public String comments;
+        public String status;
 
-        public Order(String from_who, String what, String key, String address, String comments) {
+        public Order(String from_who, String what, String key, String address, String comments, String status) {
             this.from_who = from_who;
             this.what = what;
             this.key = key;
             this.address = address;
             this.comments = comments;
+            this.status = status;
         }
 
         @Override
@@ -220,7 +263,7 @@ public class MyOrders extends Fragment {
             order_name.setText("Товар: " + orders.get(position).what);
             order_address.setText("Адрес: " + orders.get(position).address);
             order_comment.setText(orders.get(position).comments);
-            order_status.setText("Статус: " + "в обработке");
+            order_status.setText("Статус: " + orders.get(position).status);
 
             return some_view;
         }
