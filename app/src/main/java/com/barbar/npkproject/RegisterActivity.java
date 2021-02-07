@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,16 +22,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity {
 
     SharedPreferences sPref;
 
     private EditText ETemail;
     private EditText ETpassword;
+    private EditText ETfirst_name;
+    private EditText ETsecond_name;
+    private Button registration_button;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("users_list");
@@ -42,13 +44,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         ETemail = findViewById(R.id.et_email);
         ETpassword = findViewById(R.id.et_password);
+        ETfirst_name = findViewById(R.id.first_name);
+        ETsecond_name = findViewById(R.id.second_name);
+        registration_button = findViewById(R.id.button_reg);
 
         ETemail.setText(getLogin());
         ETpassword.setText(getPassword());
+        ETfirst_name.setText(getFirstName());
+        ETsecond_name.setText(getSecondName());
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -77,43 +84,68 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onCancelled(@NonNull DatabaseError error) { }
         });
 
-        findViewById(R.id.button_log).setOnClickListener(this);
-        findViewById(R.id.button_reg).setOnClickListener(this);
-    }
+        registration_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = ETemail.getText().toString();
+                String password = ETpassword.getText().toString();
 
-    @Override
-    public void onClick(View view) {
-        String email = ETemail.getText().toString();
-        String password = ETpassword.getText().toString();
+                if (email.length() < 2 || password.length() < 3) {
+                    Toast.makeText(getApplicationContext(), "Слишком короткий логин или пароль", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        if (view.getId() == R.id.button_reg) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
-        }
-        else if (view.getId() == R.id.button_log) {
+                if (email.startsWith("id_")) {
+                    Toast.makeText(getApplicationContext(), "Данное имя пользователя запрещено", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            if (successLogReg) {
-                saveText();
-                goToNextPage();
+                if (email.contains("?") || email.contains(" ")) {
+                    Toast.makeText(getApplicationContext(), "Данное имя пользователя запрещено", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                registration(email, password);
             }
-            signing(email, password);
-        }
+        });
     }
 
-    private boolean successLogReg = false;
 
-    private void signing (String email, String password) {
-        password = hashFunction(password + email);
+    private void registration (String email, String password) {
+
+        String firstName = ETfirst_name.getText().toString();
+        String secondName = ETsecond_name.getText().toString();
+
+        if (firstName.length() < 2 || secondName.length() < 2) {
+            Toast.makeText(getApplicationContext(), "Пожалуйста, введите ваше имя и фамилию", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (email.contains("admin")) {
+            Toast.makeText(getApplicationContext(), "Данное имя пользователя используется системой", Toast.LENGTH_LONG).show();
+            // TODO redo ☻ return;
+        }
+
         for (int i = 0;i < user_names_list.size();i++) {
-            if (email.equals(user_names_list.get(i)) && password.equals(user_passes_list.get(i))) {
-                Toast.makeText(getApplicationContext(), "singing", Toast.LENGTH_SHORT).show();
-                successLogReg = true;
-                break;
+            if (email.equals(user_names_list.get(i))) {
+                Toast.makeText(getApplicationContext(), "Данное имя пользователя уже занято", Toast.LENGTH_LONG).show();
+                return;
             }
         }
-        if (!successLogReg) {
-            Toast.makeText(getApplicationContext(), "this user does not exist", Toast.LENGTH_LONG).show();
+
+        saveText();
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("login", email);
+            data.put("password", hashFunction(password + email));
+            data.put("first_name", firstName);
+            data.put("second_name", secondName);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        database.getReference("users_list").push().setValue(data.toString());
     }
 
     private void goToNextPage () {
@@ -126,6 +158,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString("login", ETemail.getText().toString());
         ed.putString("password", ETpassword.getText().toString());
+        ed.putString("first_name", ETfirst_name.getText().toString());
+        ed.putString("second_name", ETsecond_name.getText().toString());
         ed.apply();
     }
 
@@ -139,6 +173,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return sPref.getString("password", "");
     }
 
+    private String getFirstName () {
+        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+        return sPref.getString("first_name", "");
+    }
+
+    private String getSecondName () {
+        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+        return sPref.getString("second_name", "");
+    }
 
     private String hashFunction (String password) {
         try {
