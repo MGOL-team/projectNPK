@@ -10,20 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <ImageButton
-        android:layout_width="40dp"
-        android:src="@drawable/plus"
-        android:scaleType="fitXY"
-        android:background="@null"
-        android:layout_gravity="right"
-        android:id="@+id/new_order_button"
-        android:layout_height="40dp"/>
+
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:divider="@null"
-        android:id="@+id/list_view">
-
-    </ListView>
+        android:layout_weight="11"
+        android:id="@+id/list_view"/>
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/plus"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        android:id="@+id/new_order_button"/>
     </LinearLayout>
+
 </FrameLayout>
