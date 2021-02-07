@@ -121,7 +121,7 @@ public class AllDeliverOrder extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -198,6 +198,7 @@ public class AllDeliverOrder extends Fragment {
                     String key = orders.get(position).key;
                     myRef.child(key).removeValue();
                     database.getReference("users").child(getLogin()).child("accepted_orders").push().setValue(orders.get(position).toString());
+                    orders.remove(position);
                 }
             });
 
