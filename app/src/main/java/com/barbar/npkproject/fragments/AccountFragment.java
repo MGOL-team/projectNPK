@@ -54,8 +54,6 @@ public class AccountFragment extends Fragment {
 
     TextView textView;
     EditText editTextField;
-    Button sendButton;
-    TextView textViewUser;
     TextView userName;
 
     ListView listView;
@@ -127,8 +125,6 @@ public class AccountFragment extends Fragment {
 
         textView = view.findViewById(R.id.text_view);
         editTextField = view.findViewById(R.id.text_edit);
-        sendButton = view.findViewById(R.id.send_button);
-        textViewUser = view.findViewById(R.id.text_edit_user);
         userName = view.findViewById(R.id.user_name);
 
         listView = view.findViewById(R.id.list_view);
@@ -143,34 +139,7 @@ public class AccountFragment extends Fragment {
 
         updateResultField();
 
-        sendButton.setOnClickListener(v -> {
-            String messageValue = editTextField.getText().toString();
-            updateResultField();
-            if (messageValue.equals("")) {
-                Toast.makeText(getActivity(), "Введите число", Toast.LENGTH_SHORT).show();
-                return;
-            }
 
-            try {
-                double num = Double.parseDouble(messageValue);
-
-                if (num < 1 || num > 5) {
-                    Toast.makeText(getActivity(), "Введите число от 1 до 5", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String myRating = (String) textView.getText();
-                if (myRating.equals("NaN")) {
-                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + " 1 " + new Date().getTime());
-                } else {
-                    myRef.child(textViewUser.getText().toString()).child("rating").push().setValue("" + num + " " + myRating + " " + new Date().getTime());
-                }
-                textViewUser.setText("");
-                editTextField.setText("");
-                updateResultField();
-            } catch (Exception e) {
-                Toast.makeText(getActivity(), "Введите нормальное число", Toast.LENGTH_SHORT).show();
-            }
-        });
         return view;
 
     }

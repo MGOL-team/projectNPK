@@ -265,6 +265,16 @@ public class MyOrders extends Fragment {
             order_comment.setText(orders.get(position).comments);
             order_status.setText("Статус: " + orders.get(position).status);
 
+           acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Fragment fragment = new PutMark();
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.my_orders, fragment);
+                    ft.commit();
+                }
+            });
+
             return some_view;
         }
     }
