@@ -82,6 +82,8 @@ public class AccountFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        myBase = new Database(database.getReference("users").child(getLogin()));
+
         myRef.child(getLogin()).child("rating").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -126,8 +128,6 @@ public class AccountFragment extends Fragment {
 
         userName.setText(getFullName());
 
-        myBase = new Database(database.getReference("users").child(getLogin()));
-
         updateResultField();
 
         return view;
@@ -151,11 +151,12 @@ public class AccountFragment extends Fragment {
             super(context, R.layout.mark_items, users);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View some_view = inflater.inflate(R.layout.mark_items, parent, false);
+            @SuppressLint("ViewHolder") View some_view = inflater.inflate(R.layout.mark_items, parent, false);
             TextView mark_us =  some_view.findViewById(R.id.user_mark);
             TextView us_id =  some_view.findViewById(R.id.id_user);
             TextView us_comment =  some_view.findViewById(R.id.user_comment);

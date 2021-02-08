@@ -176,7 +176,6 @@ public class MyOrders extends Fragment {
 
         imageButton = view.findViewById(R.id.new_order_button);
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getContext(), view.toString(), Toast.LENGTH_SHORT).show();

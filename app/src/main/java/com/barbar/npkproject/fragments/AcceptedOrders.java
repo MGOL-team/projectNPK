@@ -140,7 +140,7 @@ public class AcceptedOrders extends Fragment {
 
             View some_view = inflater.inflate(R.layout.order_items, parent, false);
             TextView us_id =  some_view.findViewById(R.id.user_id);
-            TextView order =  some_view.findViewById(R.id.order_text);
+            TextView order =  some_view.findViewById(R.id.order_name);
             order.setText(orders.get(position).what);
             us_id.setText(orders.get(position).from_who);
 

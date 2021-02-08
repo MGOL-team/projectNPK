@@ -146,7 +146,7 @@ public class AllDeliverOrder extends Fragment {
 
             View some_view = inflater.inflate(R.layout.order_items, parent, false);
             TextView us_id = some_view.findViewById(R.id.user_id);
-            TextView orderField = some_view.findViewById(R.id.order_text);
+            TextView orderField = some_view.findViewById(R.id.order_name);
             Button acceptButton = some_view.findViewById(R.id.accept_button);
 
             orderField.setText(orders.get(position).what);
