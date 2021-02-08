@@ -101,7 +101,7 @@ public class MyOrders extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Toast.makeText(getContext(), e.toString() + "", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -149,21 +149,13 @@ public class MyOrders extends Fragment {
                 }
             }
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
     }
 
@@ -219,9 +211,7 @@ public class MyOrders extends Fragment {
             order_comment.setText(orders.get(position).comments);
             order_status.setText("Статус: " + orders.get(position).status);
 
-
-
-           acceptButton.setOnClickListener(new View.OnClickListener() {
+            acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (!orders.get(position).status.equals("Доставлено")) {
