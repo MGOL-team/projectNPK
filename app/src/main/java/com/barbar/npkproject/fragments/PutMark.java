@@ -164,6 +164,7 @@ public class PutMark extends Fragment {
             return false;
         }
         changeActivity();
+        Toast.makeText(getContext(), "Благодарим за оценку!", Toast.LENGTH_LONG).show();
         return true;
     }
 

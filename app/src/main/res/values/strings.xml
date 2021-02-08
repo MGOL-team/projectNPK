@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">NPKproject</string>
-    <string name="text_email">Введите логин</string>
-    <string name="text_password">Введите пароль</string>
+    <string name="text_email">Логин</string>
+    <string name="text_password">Пароль</string>
     <string name="text_Log">Войти</string>
-    <string name="text_Reg">Зарегистрироваться</string>
+    <string name="text_Reg">Регистрация</string>
     <string name="report_bugs">report bugs</string>
     <string name="new_chat">New chat</string>
     <string name="contacts">Contacts</string>
