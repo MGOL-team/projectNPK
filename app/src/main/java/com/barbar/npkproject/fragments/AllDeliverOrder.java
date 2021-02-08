@@ -145,12 +145,18 @@ public class AllDeliverOrder extends Fragment {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View some_view = inflater.inflate(R.layout.order_items, parent, false);
-            TextView us_id = some_view.findViewById(R.id.user_id);
-            TextView orderField = some_view.findViewById(R.id.order_name);
             Button acceptButton = some_view.findViewById(R.id.accept_button);
 
-            orderField.setText(orders.get(position).what);
+            TextView us_id =  some_view.findViewById(R.id.user_id);
+            TextView order_name =  some_view.findViewById(R.id.order_name);
+            TextView order_adress =  some_view.findViewById(R.id.order_adress);
+            TextView order_comment =  some_view.findViewById(R.id.comment_text);
+
             us_id.setText(orders.get(position).from_who);
+            order_name.setText(orders.get(position).what);
+            order_adress.setText(orders.get(position).address);
+            us_id.setText(orders.get(position).from_who);
+            order_comment.setText(orders.get(position).comments);
 
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
