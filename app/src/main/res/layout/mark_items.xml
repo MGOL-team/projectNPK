@@ -12,7 +12,7 @@
         android:text="ID:########"
         android:id="@+id/user_mark"
         android:paddingStart="5dp"
-        android:textSize="16dp"/>
+        android:textSize="14dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -21,13 +21,11 @@
         android:paddingTop="2sp"
         android:paddingLeft="8sp"
         android:paddingRight="8sp">
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/star"
-            android:layout_gravity="center"
-            />
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rating_stars"
+            style="?android:attr/ratingBarStyleSmall"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

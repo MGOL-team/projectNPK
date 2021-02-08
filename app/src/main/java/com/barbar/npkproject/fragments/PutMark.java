@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.barbar.npkproject.DataAnalyze;
@@ -37,6 +38,7 @@ public class PutMark extends Fragment {
 
     EditText mark_key;
     EditText commentField;
+    RatingBar putMark;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -71,28 +73,18 @@ public class PutMark extends Fragment {
         myBase = new Database(database.getReference("users").child(getLogin()));
     }
 
-    private int mark = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_put_mark, container, false);
 
-        ImageButton scoreButton1 = view.findViewById(R.id.star_1);
-        ImageButton scoreButton2 = view.findViewById(R.id.star_2);
-        ImageButton scoreButton3 = view.findViewById(R.id.star_3);
-        ImageButton scoreButton4 = view.findViewById(R.id.star_4);
-        ImageButton scoreButton5 = view.findViewById(R.id.star_5);
         ImageButton button_back = view.findViewById(R.id.button_back);
         mark_key = view.findViewById(R.id.mark_key);
         Button confirmButton = view.findViewById(R.id.mark_button);
         commentField = view.findViewById(R.id.text_edit);
-
-        scoreButton1.setOnClickListener(v -> mark = 1);
-        scoreButton2.setOnClickListener(v -> mark = 2);
-        scoreButton3.setOnClickListener(v -> mark = 3);
-        scoreButton4.setOnClickListener(v -> mark = 4);
-        scoreButton5.setOnClickListener(v -> mark = 5);
+        putMark = view.findViewById(R.id.rating_stars);
+        putMark.setStepSize(1);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +119,7 @@ public class PutMark extends Fragment {
     }
 
     private boolean toMark () {
-        if (mark < 0) {
+        if (putMark.getRating() == 0) {
             Toast.makeText(getContext(), "Поставьте оценку", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -141,7 +133,7 @@ public class PutMark extends Fragment {
             }
 
             JSONObject object = new JSONObject();
-            object.put("value", mark);
+            object.put("value", putMark.getRating());
             object.put("time", new Date().getTime());
             object.put("login", getLogin());
             object.put("type", "estimator");

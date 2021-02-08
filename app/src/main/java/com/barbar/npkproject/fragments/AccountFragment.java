@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -158,12 +159,14 @@ public class AccountFragment extends Fragment {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             @SuppressLint("ViewHolder") View some_view = inflater.inflate(R.layout.mark_items, parent, false);
-            TextView mark_us =  some_view.findViewById(R.id.user_mark);
-            TextView us_id =  some_view.findViewById(R.id.id_user);
+
+            TextView us_id =  some_view.findViewById(R.id.user_mark);
             TextView us_comment =  some_view.findViewById(R.id.user_comment);
+            RatingBar us_mark = some_view.findViewById(R.id.rating_stars);
             us_comment.setText(users.get(position).comment);
-            mark_us.setText('@' + users.get(position).mark);
-            us_id.setText(users.get(position).from_who);
+            us_id.setText('@' + users.get(position).mark);
+
+            us_mark.setRating(Float.parseFloat(users.get(position).from_who));
 
             return some_view;
         }

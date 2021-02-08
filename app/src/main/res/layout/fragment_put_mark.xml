@@ -23,47 +23,10 @@
         android:paddingBottom="15dp"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RatingBar
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:scaleType="fitCenter"
-                android:background="@null"
-                android:id="@+id/star_1"
-                android:src="@android:drawable/star_off"/>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:id="@+id/star_2"
-                android:src="@android:drawable/star_off"/>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:id="@+id/star_3"
-                android:src="@android:drawable/star_off"/>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:id="@+id/star_4"
-                android:src="@android:drawable/star_off"/>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:id="@+id/star_5"
-                android:src="@android:drawable/star_off"/>
-        </LinearLayout>
+            android:id="@+id/rating_stars"/>
 
 
     <EditText
