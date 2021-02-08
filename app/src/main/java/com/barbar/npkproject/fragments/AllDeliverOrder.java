@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barbar.npkproject.Order;
 import com.barbar.npkproject.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -35,11 +36,6 @@ import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AllDeliverOrder#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AllDeliverOrder extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -50,12 +46,9 @@ public class AllDeliverOrder extends Fragment {
     ListView listView;
     List<Order> orders = new ArrayList<>();
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -63,15 +56,8 @@ public class AllDeliverOrder extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DeliverOrder.
-     */
-    // TODO: Rename and change types and number of parameters
+
+
     public static AllDeliverOrder newInstance(String param1, String param2) {
         AllDeliverOrder fragment = new AllDeliverOrder();
         Bundle args = new Bundle();
@@ -96,13 +82,7 @@ public class AllDeliverOrder extends Fragment {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
                     if (!object.get("login").toString().equals(login)) {
-                        orders.add(new Order(
-                                object.get("login").toString(),
-                                object.get("items").toString(),
-                                snapshot.getKey(),
-                                object.get("address").toString(),
-                                object.get("comments").toString()
-                        ));
+                        orders.add(new Order(object, snapshot.getKey(), "status"));
                     }
 
                     if (adapter != null) {
@@ -152,35 +132,6 @@ public class AllDeliverOrder extends Fragment {
         return view;
     }
 
-    public class Order {
-        public String from_who;
-        public String what;
-        public String key;
-        public String address;
-        public String comments;
-
-        public Order(String from_who, String what, String key, String address, String comments) {
-            this.from_who = from_who;
-            this.what = what;
-            this.key = key;
-            this.address = address;
-            this.comments = comments;
-        }
-
-        @Override
-        public String toString() {
-            JSONObject object = new JSONObject();
-            try {
-                object.put("login", from_who);
-                object.put("items", what);
-                object.put("address", address);
-                object.put("comments", comments);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return object.toString();
-        }
-    }
 
     private class DeliverAdapter extends ArrayAdapter<Order> {
 
@@ -223,6 +174,7 @@ public class AllDeliverOrder extends Fragment {
                     myRef.child(order.key).setValue(object.toString());
 
                     orders.remove(position);
+                    adapter.notifyDataSetChanged();
                 }
             });
 

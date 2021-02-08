@@ -1,5 +1,6 @@
 package com.barbar.npkproject.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barbar.npkproject.Order;
 import com.barbar.npkproject.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -37,11 +39,6 @@ import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyOrders#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MyOrders extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -54,12 +51,9 @@ public class MyOrders extends Fragment {
 
     ImageButton imageButton;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -67,15 +61,6 @@ public class MyOrders extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyOrders.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MyOrders newInstance(String param1, String param2) {
         MyOrders fragment = new MyOrders();
         Bundle args = new Bundle();
@@ -153,15 +138,7 @@ public class MyOrders extends Fragment {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
                     if (object.get("login").toString().equals(login)) {
-                        orders.add(new Order(
-                                object.get("login").toString(),
-                                object.get("items").toString(),
-                                snapshot.getKey(),
-                                object.get("address").toString(),
-                                object.get("comments").toString(),
-                                "Ожидает оплаты",
-                                object.get("courier").toString()
-                        ));
+                        orders.add(new Order(object, snapshot.getKey(), "Ожидает оплаты"));
                     }
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
@@ -190,8 +167,7 @@ public class MyOrders extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
 
         listView = view.findViewById(R.id.list_view);
@@ -220,46 +196,13 @@ public class MyOrders extends Fragment {
         return view;
     }
 
-    public class Order {
-        public String from_who;
-        public String what;
-        public String key;
-        public String address;
-        public String comments;
-        public String status;
-        public String courier;
-
-        public Order(String from_who, String what, String key, String address, String comments, String status, String courier) {
-            this.from_who = from_who;
-            this.what = what;
-            this.key = key;
-            this.address = address;
-            this.comments = comments;
-            this.status = status;
-            this.courier = courier;
-        }
-
-        @Override
-        public String toString() {
-            JSONObject object = new JSONObject();
-            try {
-                object.put("login", from_who);
-                object.put("items", what);
-                object.put("address", address);
-                object.put("comments", comments);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return object.toString();
-        }
-    }
-
     private class DeliverAdapter extends ArrayAdapter<Order> {
 
         public DeliverAdapter(Context context) {
             super(context, R.layout.order_items, orders);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
