@@ -40,6 +40,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="20dp">
 
         <Button
@@ -48,7 +50,7 @@
             android:layout_weight="1"
             android:text="@string/text_Log"
             android:textSize="16sp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="10dp"
             android:textColor="@color/white"
             android:backgroundTint="@color/sub_color"
             android:id="@+id/button_log"/>
@@ -61,7 +63,7 @@
             android:textColor="@color/white"
             android:backgroundTint="@color/sub_color"
             android:textSize="16sp"
-            android:layout_marginRight="15dp"
+            android:layout_marginStart="15dp"
             android:id="@+id/button_reg"/>
 
     </LinearLayout>
