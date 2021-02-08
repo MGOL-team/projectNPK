@@ -36,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText ETemail;
     private EditText ETpassword;
     private EditText ETfirst_name;
+    private EditText ETpassword2;
     private EditText ETsecond_name;
     private Button registration_button;
     private ImageButton button_back;
@@ -53,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         ETemail = findViewById(R.id.et_email);
         ETpassword = findViewById(R.id.et_password);
+        ETpassword2 = findViewById(R.id.repeat_password);
         ETfirst_name = findViewById(R.id.first_name);
         ETsecond_name = findViewById(R.id.second_name);
         registration_button = findViewById(R.id.button_reg);
@@ -129,6 +131,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         String firstName = ETfirst_name.getText().toString();
         String secondName = ETsecond_name.getText().toString();
+
+        if (!ETpassword2.getText().toString().equals(ETpassword.getText().toString())) {
+            Toast.makeText(getApplicationContext(), "Пароли не совпадают", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (firstName.length() < 2 || secondName.length() < 2) {
             Toast.makeText(getApplicationContext(), "Пожалуйста, введите ваше имя и фамилию", Toast.LENGTH_SHORT).show();

@@ -29,7 +29,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PutMark extends Fragment {
 
-    private final String nameOfUser;
+    private JSONObject data;
+    private String typeOfCurrentUser;
     private Database myBase;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -40,12 +41,13 @@ public class PutMark extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public PutMark(String nameOfUser) {
-        this.nameOfUser = nameOfUser;
+    public PutMark(JSONObject data, String typeOfCurrentUser) {
+        this.data = data;
+        this.typeOfCurrentUser = typeOfCurrentUser;
     }
 
     public static PutMark newInstance(String param1, String param2) {
-        PutMark fragment = new PutMark(null);
+        PutMark fragment = new PutMark(null, null);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,43 +91,44 @@ public class PutMark extends Fragment {
             @Override
             public void onClick(View v) {
                 String comments = commentField.getText().toString();
-                toMark(comments, nameOfUser);
+                toMark(comments);
             }
         });
 
         return view;
     }
 
-    private boolean toMark (String comments, String whoDoIRate) {
-
-        Toast.makeText(getContext(), whoDoIRate, Toast.LENGTH_LONG).show();
-
+    private boolean toMark (String comments) {
         if (mark < 0) {
             Toast.makeText(getContext(), "Поставьте оценку", Toast.LENGTH_SHORT).show();
             return false;
         }
-
-        try {
-            JSONObject object = new JSONObject();
-            object.put("value", mark);
-            object.put("time", new Date().getTime());
-            object.put("login", getLogin());
-            object.put("type", "estimator");
-            object.put("comment", comments);
-            String myRating = updateResultField();
-            if (myRating.equals("NaN")) {
-                object.put("apr_rating", 1);
-            } else {
-                object.put("apr_rating", updateResultField());
-            }
-
-            database.getReference("users").child(whoDoIRate).child("rating").push().setValue(object.toString());
-
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "" + e.toString(), Toast.LENGTH_LONG).show();
-            //Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//
+//        if (typeOfCurrentUser.equals("courier")) {
+//            if ()
+//        }
+//
+//        try {
+//            JSONObject object = new JSONObject();
+//            object.put("value", mark);
+//            object.put("time", new Date().getTime());
+//            object.put("login", getLogin());
+//            object.put("type", "estimator");
+//            object.put("comment", comments);
+//            String myRating = updateResultField();
+//            if (myRating.equals("NaN")) {
+//                object.put("apr_rating", 1);
+//            } else {
+//                object.put("apr_rating", updateResultField());
+//            }
+//
+//            database.getReference("users").child(whoDoIRate).child("rating").push().setValue(object.toString());
+//
+//        } catch (Exception e) {
+//            Toast.makeText(getContext(), "" + e.toString(), Toast.LENGTH_LONG).show();
+//            //Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         return true;
     }
 
