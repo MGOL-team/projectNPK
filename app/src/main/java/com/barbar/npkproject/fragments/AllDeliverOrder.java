@@ -81,7 +81,9 @@ public class AllDeliverOrder extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
-                    if (!object.get("login").toString().equals(login)) {
+                    if (!object.get("login").toString().equals(login) &&
+                            !object.get("status").toString().equals("Завершено") &&
+                            !object.get("status").toString().equals("Заказ доставляется")) {
                         Order newOrder = new Order(object, snapshot.getKey(), "status");
                         if (newOrder.courier.equals("")) {
                             orders.add(newOrder);

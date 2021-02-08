@@ -108,7 +108,13 @@ public class AcceptedOrders extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                for (int i = 0;i < orders.size();i++) {
+                    if (orders.get(i).key.equals(snapshot.getKey())) {
+                        orders.remove(i);
+                        break;
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override

@@ -232,7 +232,8 @@ public class MyOrders extends Fragment {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (!orders.get(position).status.equals("Доставлено")) {
+                    if (!orders.get(position).status.equals("Завершено")) {
+                        Toast.makeText(getContext(), orders.get(position).secretCode, Toast.LENGTH_LONG).show();
                         return;
                     }
                     Fragment fragment = null;

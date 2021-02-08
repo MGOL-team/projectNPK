@@ -91,7 +91,15 @@ public class PutMark extends Fragment {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                if (!typeOfCurrentUser.equals("courier")) {
+//                    try {
+//                        Toast.makeText(getContext(), data.get("secret_key").toString(), Toast.LENGTH_LONG).show();
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
                 toMark();
+
             }
         });
 
@@ -158,6 +166,7 @@ public class PutMark extends Fragment {
                 database.getReference("orders_list").child(key).setValue(data.toString());
                 database.getReference("users").child(data.get("login").toString()).child("rating").push().setValue(object.toString());
             } else {
+                database.getReference("orders_list").child(key).removeValue();
                 database.getReference("users").child(data.get("courier").toString()).child("rating").push().setValue(object.toString());
             }
         } catch (Exception e) {
