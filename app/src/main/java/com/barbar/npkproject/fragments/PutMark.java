@@ -35,6 +35,7 @@ public class PutMark extends Fragment {
     private JSONObject data;
     private String typeOfCurrentUser;
     private Database myBase;
+    String key;
 
     EditText mark_key;
     EditText commentField;
@@ -48,13 +49,14 @@ public class PutMark extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public PutMark(JSONObject data, String typeOfCurrentUser) {
+    public PutMark(JSONObject data, String typeOfCurrentUser, String key) {
         this.data = data;
         this.typeOfCurrentUser = typeOfCurrentUser;
+        this.key = key;
     }
 
     public static PutMark newInstance(String param1, String param2) {
-        PutMark fragment = new PutMark(null, null);
+        PutMark fragment = new PutMark(null, null, null);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -130,6 +132,11 @@ public class PutMark extends Fragment {
                     Toast.makeText(getContext(), "Неправильный код", Toast.LENGTH_LONG).show();
                     return false;
                 }
+            } else {
+                if (!data.get("status").toString().equals("Завершено")) {
+                    Toast.makeText(getContext(), "Пожалуйста, дождитесь доставки", Toast.LENGTH_LONG).show();
+                    return false;
+                }
             }
 
             JSONObject object = new JSONObject();
@@ -146,6 +153,9 @@ public class PutMark extends Fragment {
             }
 
             if (typeOfCurrentUser.equals("courier")) {
+                database.getReference("orders_list").child(key).removeValue();
+                data.put("status", "Завершено");
+                database.getReference("orders_list").child(key).setValue(data.toString());
                 database.getReference("users").child(data.get("login").toString()).child("rating").push().setValue(object.toString());
             } else {
                 database.getReference("users").child(data.get("courier").toString()).child("rating").push().setValue(object.toString());

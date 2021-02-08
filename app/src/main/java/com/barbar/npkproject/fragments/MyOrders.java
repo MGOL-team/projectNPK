@@ -151,7 +151,15 @@ public class MyOrders extends Fragment {
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                for (int i = 0;i < orders.size();i++) {
+                    if (orders.get(i).status.equals("Ожидает оплаты")) {
+                        orders.remove(i);
+                        break;
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
@@ -225,11 +233,11 @@ public class MyOrders extends Fragment {
                 @Override
                 public void onClick(View view) {
                     if (!orders.get(position).status.equals("Доставлено")) {
-                        //TODO return;
+                        return;
                     }
                     Fragment fragment = null;
                     try {
-                        fragment = new PutMark(new JSONObject(orders.get(position).toString()), "customer");
+                        fragment = new PutMark(new JSONObject(orders.get(position).toString()), "customer", orders.get(position).key);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

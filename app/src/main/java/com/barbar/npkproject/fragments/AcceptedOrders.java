@@ -91,7 +91,7 @@ public class AcceptedOrders extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 try {
                     JSONObject object = new JSONObject(snapshot.getValue(String.class));
-                    if (object.get("courier").toString().equals(login)) {
+                    if (object.get("courier").toString().equals(login) && !object.get("status").toString().equals("Завершено")) {
                         orders.add(new Order(object, snapshot.getKey(), (String) object.get("status")));
                     }
 
@@ -163,7 +163,7 @@ public class AcceptedOrders extends Fragment {
                 public void onClick(View v) {
                     Fragment fragment = null;
                     try {
-                        fragment = new PutMark(new JSONObject(orders.get(position).toString()), "courier");
+                        fragment = new PutMark(new JSONObject(orders.get(position).toString()), "courier", orders.get(position).key);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
