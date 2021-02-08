@@ -82,7 +82,10 @@ public class AllDeliverOrder extends Fragment {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
                     if (!object.get("login").toString().equals(login)) {
-                        orders.add(new Order(object, snapshot.getKey(), "status"));
+                        Order newOrder = new Order(object, snapshot.getKey(), "status");
+                        if (newOrder.courier.equals("")) {
+                            orders.add(newOrder);
+                        }
                     }
 
                     if (adapter != null) {
@@ -112,13 +115,6 @@ public class AllDeliverOrder extends Fragment {
             }
         });
 
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Toast.makeText(getContext(), orders.size() + "", Toast.LENGTH_SHORT).show();
-        adapter.notifyDataSetChanged();
     }
 
     @Override
