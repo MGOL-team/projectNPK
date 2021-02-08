@@ -3,6 +3,8 @@ package com.barbar.npkproject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,8 +12,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.barbar.npkproject.fragments.MyOrders;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText ETfirst_name;
     private EditText ETsecond_name;
     private Button registration_button;
+    private ImageButton button_back;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("users_list");
@@ -51,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         ETfirst_name = findViewById(R.id.first_name);
         ETsecond_name = findViewById(R.id.second_name);
         registration_button = findViewById(R.id.button_reg);
+        button_back = findViewById(R.id.button_back);
 
         ETemail.setText(getLogin());
         ETpassword.setText(getPassword());
@@ -106,6 +112,14 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 registration(email, password);
+            }
+        });
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }

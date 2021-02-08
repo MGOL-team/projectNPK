@@ -6,6 +6,14 @@
     android:background="@color/top_panel_menu"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background=""
+        android:src="?attr/homeAsUpIndicator"
+        android:scaleType="fitStart"
+        android:id="@+id/button_back"/>
+
     <EditText
         android:id="@+id/first_name"
         android:layout_width="match_parent"
