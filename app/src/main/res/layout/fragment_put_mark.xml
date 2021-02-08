@@ -4,16 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.PutMark"
-    android:paddingTop="15dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingBottom="15dp"
     android:background="@color/white"
     android:orientation="vertical">
+
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:src="?attr/homeAsUpIndicator"
+        android:scaleType="fitStart"
+        android:id="@+id/button_back"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="45dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -22,40 +29,40 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:scaleType="fitXY"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitCenter"
                 android:background="@null"
                 android:id="@+id/star_1"
-                android:src="@drawable/star"/>
+                android:src="@android:drawable/star_off"/>
             <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:scaleType="fitXY"
                 android:background="@null"
                 android:id="@+id/star_2"
-                android:src="@drawable/star"/>
+                android:src="@android:drawable/star_off"/>
             <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:scaleType="fitXY"
                 android:background="@null"
                 android:id="@+id/star_3"
-                android:src="@drawable/star"/>
+                android:src="@android:drawable/star_off"/>
             <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:scaleType="fitXY"
                 android:background="@null"
                 android:id="@+id/star_4"
-                android:src="@drawable/star"/>
+                android:src="@android:drawable/star_off"/>
             <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:scaleType="fitXY"
                 android:background="@null"
                 android:id="@+id/star_5"
-                android:src="@drawable/star"/>
+                android:src="@android:drawable/star_off"/>
         </LinearLayout>
 
 
@@ -67,12 +74,26 @@
         android:id="@+id/text_edit"/>
 
     </LinearLayout>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        android:id="@+id/mark_key"
+        android:background="@color/white"
+        android:hint="Введите код"/>
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Оценить"
         android:textSize="24dp"
-        android:layout_gravity="bottom"
+        android:backgroundTint="@color/sub_color"
+        android:layout_gravity = "bottom"
+        android:layout_marginBottom = "15dp"
+        android:layout_marginLeft = "15dp"
+        android:layout_marginRight = "15dp"
         android:id="@+id/mark_button"
         />
 </FrameLayout>
