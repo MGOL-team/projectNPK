@@ -1,5 +1,6 @@
 package com.barbar.npkproject.fragments;
 
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -106,7 +107,8 @@ public class MyOrders extends Fragment {
                                 snapshot.getKey(),
                                 object.get("address").toString(),
                                 object.get("comments").toString(),
-                                object.get("status").toString()
+                                object.get("status").toString(),
+                                object.get("courier").toString()
                         ));
                     }
                     if (adapter != null) {
@@ -157,14 +159,15 @@ public class MyOrders extends Fragment {
                                 snapshot.getKey(),
                                 object.get("address").toString(),
                                 object.get("comments").toString(),
-                                "Ожидает оплаты"
+                                "Ожидает оплаты",
+                                object.get("courier").toString()
                         ));
                     }
                     if (adapter != null) {
                         adapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Toast.makeText(getContext(), "Error with JSON", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
@@ -224,14 +227,16 @@ public class MyOrders extends Fragment {
         public String address;
         public String comments;
         public String status;
+        public String courier;
 
-        public Order(String from_who, String what, String key, String address, String comments, String status) {
+        public Order(String from_who, String what, String key, String address, String comments, String status, String courier) {
             this.from_who = from_who;
             this.what = what;
             this.key = key;
             this.address = address;
             this.comments = comments;
             this.status = status;
+            this.courier = courier;
         }
 
         @Override
@@ -250,7 +255,6 @@ public class MyOrders extends Fragment {
     }
 
     private class DeliverAdapter extends ArrayAdapter<Order> {
-
 
         public DeliverAdapter(Context context) {
             super(context, R.layout.order_items, orders);
@@ -272,10 +276,15 @@ public class MyOrders extends Fragment {
             order_comment.setText(orders.get(position).comments);
             order_status.setText("Статус: " + orders.get(position).status);
 
+
+
            acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Fragment fragment = new PutMark(orders.get(position).from_who);
+                    if (!orders.get(position).status.equals("Доставлено")) {
+                        //TODO return;
+                    }
+                    Fragment fragment = new PutMark(orders.get(position).courier);
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.my_orders, fragment);
                     ft.commit();

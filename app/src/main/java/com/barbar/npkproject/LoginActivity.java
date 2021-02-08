@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText ETemail;
     private EditText ETpassword;
+    private String first_name;
+    private String second_name;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("users_list");
@@ -59,11 +61,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     JSONObject data = new JSONObject(data_snapshot);
                     user_names_list.add((String) data.get("login"));
                     user_passes_list.add((String) data.get("password"));
+                    first_name = data.get("first_name").toString();
+                    second_name = data.get("second_name").toString();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 if (user_names_list.get(user_names_list.size() - 1).equals(ETemail.getText().toString()) &&
                         user_passes_list.get(user_passes_list.size() - 1).equals(hashFunction(ETpassword.getText().toString() + ETemail.getText().toString()))) {
+                    saveText();
                     goToNextPage();
                 }
             }
@@ -126,6 +131,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString("login", ETemail.getText().toString());
         ed.putString("password", ETpassword.getText().toString());
+        ed.putString("first_name", first_name);
+        ed.putString("second_name", second_name);
         ed.apply();
     }
 

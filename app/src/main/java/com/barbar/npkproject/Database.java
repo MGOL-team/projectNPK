@@ -1,5 +1,6 @@
 package com.barbar.npkproject;
 
+import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 public class Database {
 
-    AccountFragment accountFragment;
+    AccountFragment accountFragment = null;
 
     private final Map<String, List<JSONObject>> allDataMap;
 
@@ -30,8 +31,15 @@ public class Database {
         allDataMap.put("rating", new ArrayList<>());
     }
 
-    public Database(DatabaseReference myRef, Fragment accountFragment) {
-        this.accountFragment = (AccountFragment) accountFragment;
+    public Database(DatabaseReference myRef) {
+        allDataMap = new HashMap<>();
+
+        initializeListsOfMaps();
+        fillMapFromDatabase(myRef);
+    }
+
+    public Database(DatabaseReference myRef, AccountFragment accountFragment) {
+        this.accountFragment = accountFragment;
         allDataMap = new HashMap<>();
 
         initializeListsOfMaps();
@@ -47,8 +55,9 @@ public class Database {
                     allDataMap.get("rating").add(new JSONObject(data));
                 } catch (JSONException ignore) {
                 }
-                accountFragment.updateResultField();
-                //Toast.makeText(accountFragment.getContext(), snapshot + "", Toast.LENGTH_SHORT).show();
+                if (accountFragment != null) {
+                    accountFragment.updateResultField();
+                }
             }
 
             @Override

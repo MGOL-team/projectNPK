@@ -102,6 +102,7 @@ public class AccountFragment extends Fragment {
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
                 }
+                updateResultField();
             }
 
             @Override
@@ -133,12 +134,9 @@ public class AccountFragment extends Fragment {
 
         userName.setText(getFullName());
 
-
-
-        myBase = new Database(database.getReference("users").child(getLogin()),  this);
+        myBase = new Database(database.getReference("users").child(getLogin()));
 
         updateResultField();
-
 
         return view;
 

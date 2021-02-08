@@ -34,7 +34,8 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class PutMark extends Fragment {
 
-    private String nameOfUser;
+    private final String nameOfUser;
+    private Database myBase;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -51,15 +52,6 @@ public class PutMark extends Fragment {
         this.nameOfUser = nameOfUser;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PutMark.
-     */
-    // TODO: Rename and change types and number of parameters
     public static PutMark newInstance(String param1, String param2) {
         PutMark fragment = new PutMark(null);
         Bundle args = new Bundle();
@@ -76,6 +68,8 @@ public class PutMark extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        myBase = new Database(database.getReference("users").child(getLogin()));
     }
 
     private int mark = -1;
@@ -112,6 +106,8 @@ public class PutMark extends Fragment {
 
     private boolean toMark (String comments, String whoDoIRate) {
 
+        Toast.makeText(getContext(), whoDoIRate, Toast.LENGTH_LONG).show();
+
         if (mark < 0) {
             Toast.makeText(getContext(), "Поставьте оценку", Toast.LENGTH_SHORT).show();
             return false;
@@ -128,13 +124,15 @@ public class PutMark extends Fragment {
             if (myRating.equals("NaN")) {
                 object.put("apr_rating", 1);
             } else {
+                //object.put("apr_rating", 1);
                 object.put("apr_rating", updateResultField());
             }
 
             database.getReference("users").child(whoDoIRate).child("rating").push().setValue(object.toString());
 
         } catch (Exception e) {
-            Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "" + e.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -146,7 +144,7 @@ public class PutMark extends Fragment {
     }
 
     public String updateResultField() {
-        List<JSONObject> ratingList = new Database(database.getReference("users").child(getLogin()),  this).getAllDataMap().get("rating");
+        List<JSONObject> ratingList = myBase.getAllDataMap().get("rating");
        return new DataAnalyze().getResult(ratingList);
     }
 }
