@@ -42,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="30sp"
 
         android:hint="@string/text_email"
         android:textSize="30dp" />
@@ -55,7 +54,6 @@
 
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="30dp"
 
         android:hint="@string/text_password"
         android:textSize="30sp" />

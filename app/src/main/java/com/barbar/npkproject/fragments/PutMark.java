@@ -20,6 +20,7 @@ import com.barbar.npkproject.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -103,16 +104,26 @@ public class PutMark extends Fragment {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new MyOrders();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.my_orders, fragment);
-                ft.commit();
+                changeActivity();
             }
         });
-
-        mark_key.setEnabled(false);
+        if (typeOfCurrentUser != "courier") {
+            mark_key.setEnabled(false);
+            mark_key.setBackgroundColor(1);
+            try {
+                mark_key.setHint("ВАШ КОД:\n" + data.get("secret_code").toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         return view;
+    }
+
+    private void changeActivity(){
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.remove(this);
+            ft.commit();
     }
 
     private boolean toMark () {
@@ -152,6 +163,7 @@ public class PutMark extends Fragment {
             //Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
             return false;
         }
+        changeActivity();
         return true;
     }
 
