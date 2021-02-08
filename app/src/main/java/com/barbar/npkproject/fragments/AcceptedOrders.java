@@ -144,10 +144,9 @@ public class AcceptedOrders extends Fragment {
             TextView order_adress =  some_view.findViewById(R.id.order_adress);
             TextView order_comment =  some_view.findViewById(R.id.comment_text);
 
-            us_id.setText(orders.get(position).from_who);
-            order_name.setText(orders.get(position).what);
-            order_adress.setText(orders.get(position).address);
-            us_id.setText(orders.get(position).from_who);
+            us_id.setText('@' + orders.get(position).from_who);
+            order_name.setText("Товар: " + orders.get(position).what);
+            order_adress.setText("Адрес: " + orders.get(position).address);
             order_comment.setText(orders.get(position).comments);
 
             return some_view;
