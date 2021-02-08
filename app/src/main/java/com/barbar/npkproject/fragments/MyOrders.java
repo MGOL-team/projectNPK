@@ -106,7 +106,7 @@ public class MyOrders extends Fragment {
                                 snapshot.getKey(),
                                 object.get("address").toString(),
                                 object.get("comments").toString(),
-                                "Оплачено"
+                                object.get("status").toString()
                         ));
                     }
                     if (adapter != null) {
@@ -124,6 +124,13 @@ public class MyOrders extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                String key = snapshot.getKey();
+                for (int i = 0;i < orders.size();i++) {
+                    if (orders.get(i).key.equals(key)) {
+                        orders.remove(i);
+                        break;
+                    }
+                }
                 adapter.notifyDataSetChanged();
             }
 

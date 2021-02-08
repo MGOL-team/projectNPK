@@ -215,7 +215,7 @@ public class AllDeliverOrder extends Fragment {
                         object.put("login", order.from_who);
                         object.put("type", "estimator");
                         object.put("courier", getLogin());
-                        object.put("status", "delivered");
+                        object.put("status", "Заказ доставляется");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

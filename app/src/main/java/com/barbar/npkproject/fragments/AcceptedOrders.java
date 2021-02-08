@@ -33,11 +33,6 @@ import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AcceptedOrders#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AcceptedOrders extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -61,15 +56,6 @@ public class AcceptedOrders extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AcceptedOrders.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AcceptedOrders newInstance(String param1, String param2) {
         AcceptedOrders fragment = new AcceptedOrders();
         Bundle args = new Bundle();

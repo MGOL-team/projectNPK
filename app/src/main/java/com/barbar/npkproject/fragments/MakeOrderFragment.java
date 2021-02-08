@@ -145,7 +145,7 @@ public class MakeOrderFragment extends Fragment {
                         data.put("type", "estimator");
                         data.put("courier", "");
                         /// TODO another status
-                        data.put("status", "paid");
+                        data.put("status", "Оплачено");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
