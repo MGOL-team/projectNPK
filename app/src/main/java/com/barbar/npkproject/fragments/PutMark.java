@@ -34,6 +34,9 @@ public class PutMark extends Fragment {
     private String typeOfCurrentUser;
     private Database myBase;
 
+    EditText mark_key;
+    EditText commentField;
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     private static final String ARG_PARAM1 = "param1";
@@ -80,9 +83,9 @@ public class PutMark extends Fragment {
         ImageButton scoreButton4 = view.findViewById(R.id.star_4);
         ImageButton scoreButton5 = view.findViewById(R.id.star_5);
         ImageButton button_back = view.findViewById(R.id.button_back);
-        EditText mark_key = view.findViewById(R.id.mark_key);
+        mark_key = view.findViewById(R.id.mark_key);
         Button confirmButton = view.findViewById(R.id.mark_button);
-        EditText commentField = view.findViewById(R.id.text_edit);
+        commentField = view.findViewById(R.id.text_edit);
 
         scoreButton1.setOnClickListener(v -> mark = 1);
         scoreButton2.setOnClickListener(v -> mark = 2);
@@ -93,8 +96,7 @@ public class PutMark extends Fragment {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String comments = commentField.getText().toString();
-                toMark(comments);
+                toMark();
             }
         });
 
@@ -113,37 +115,43 @@ public class PutMark extends Fragment {
         return view;
     }
 
-    private boolean toMark (String comments) {
+    private boolean toMark () {
         if (mark < 0) {
             Toast.makeText(getContext(), "Поставьте оценку", Toast.LENGTH_SHORT).show();
             return false;
         }
-//
-//        if (typeOfCurrentUser.equals("courier")) {
-//            if ()
-//        }
-//
-//        try {
-//            JSONObject object = new JSONObject();
-//            object.put("value", mark);
-//            object.put("time", new Date().getTime());
-//            object.put("login", getLogin());
-//            object.put("type", "estimator");
-//            object.put("comment", comments);
-//            String myRating = updateResultField();
-//            if (myRating.equals("NaN")) {
-//                object.put("apr_rating", 1);
-//            } else {
-//                object.put("apr_rating", updateResultField());
-//            }
-//
-//            database.getReference("users").child(whoDoIRate).child("rating").push().setValue(object.toString());
-//
-//        } catch (Exception e) {
-//            Toast.makeText(getContext(), "" + e.toString(), Toast.LENGTH_LONG).show();
-//            //Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
+
+        try {
+            if (typeOfCurrentUser.equals("courier")) {
+                if (!data.get("secret_code").toString().equals(mark_key.getText().toString())) {
+                    Toast.makeText(getContext(), "Неправильный код", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }
+
+            JSONObject object = new JSONObject();
+            object.put("value", mark);
+            object.put("time", new Date().getTime());
+            object.put("login", getLogin());
+            object.put("type", "estimator");
+            object.put("comment", commentField.getText().toString());
+            String myRating = updateResultField();
+            if (myRating.equals("NaN")) {
+                object.put("apr_rating", 1);
+            } else {
+                object.put("apr_rating", updateResultField());
+            }
+
+            if (typeOfCurrentUser.equals("courier")) {
+                database.getReference("users").child(data.get("login").toString()).child("rating").push().setValue(object.toString());
+            } else {
+                database.getReference("users").child(data.get("courier").toString()).child("rating").push().setValue(object.toString());
+            }
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "" + e.toString(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 
