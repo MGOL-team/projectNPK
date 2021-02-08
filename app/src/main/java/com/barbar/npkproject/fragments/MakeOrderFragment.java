@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.barbar.npkproject.MainActivity;
+import com.barbar.npkproject.Order;
 import com.barbar.npkproject.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -149,6 +150,7 @@ public class MakeOrderFragment extends Fragment {
                         data.put("courier", "");
                         /// TODO another status
                         data.put("status", "Оплачено");
+                        data.put("secret_code", Order.generateSecretCode(6));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

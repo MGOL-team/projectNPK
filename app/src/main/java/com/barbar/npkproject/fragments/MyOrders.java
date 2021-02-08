@@ -93,7 +93,8 @@ public class MyOrders extends Fragment {
                                 object.get("address").toString(),
                                 object.get("comments").toString(),
                                 object.get("status").toString(),
-                                object.get("courier").toString()
+                                object.get("courier").toString(),
+                                object.get("secret_code").toString()
                         ));
                     }
                     if (adapter != null) {
