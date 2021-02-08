@@ -7,12 +7,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -139,6 +141,8 @@ public class AcceptedOrders extends Fragment {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View some_view = inflater.inflate(R.layout.order_items, parent, false);
+            Button acceptButton = some_view.findViewById(R.id.accept_button);
+
             TextView us_id =  some_view.findViewById(R.id.user_id);
             TextView order_name =  some_view.findViewById(R.id.order_name);
             TextView order_adress =  some_view.findViewById(R.id.order_adress);
@@ -148,6 +152,16 @@ public class AcceptedOrders extends Fragment {
             order_name.setText("Товар: " + orders.get(position).what);
             order_adress.setText("Адрес: " + orders.get(position).address);
             order_comment.setText(orders.get(position).comments);
+
+            acceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment fragment = new PutMark(orders.get(position).from_who);
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.all_orders, fragment);
+                    ft.commit();
+                }
+            });
 
             return some_view;
         }

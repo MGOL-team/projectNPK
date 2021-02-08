@@ -89,7 +89,7 @@ public class AccountFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
-                    users.add(new User(object.get("value").toString(), object.get("login").toString()));
+                    users.add(new User(object.get("value").toString(), object.get("login").toString(), object.get("comment").toString()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -139,9 +139,10 @@ public class AccountFragment extends Fragment {
         public  String mark;
         public  String comment;
 
-        public User(String from_who, String mark) {
+        public User(String from_who, String mark, String comment) {
             this.from_who = from_who;
             this.mark = mark;
+            this.comment = comment;
         }
     }
 
