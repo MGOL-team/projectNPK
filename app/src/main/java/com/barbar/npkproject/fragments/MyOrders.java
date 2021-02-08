@@ -201,14 +201,24 @@ public class MyOrders extends Fragment {
 
             View some_view = inflater.inflate(R.layout.my_orders_item, parent, false);
             TextView order_name =  some_view.findViewById(R.id.order_name);
+            TextView order_courier =  some_view.findViewById(R.id.order_courier);
             TextView order_address =  some_view.findViewById(R.id.order_adres);
             TextView order_comment =  some_view.findViewById(R.id.comment_text);
             TextView order_status =  some_view.findViewById(R.id.order_status);
             Button acceptButton = some_view.findViewById(R.id.accept_button);
 
+            if (orders.get(position).courier.length() < 2){
+                order_courier.setHeight(0);
+            }
+            if (orders.get(position).comments.length() < 2){
+                order_comment.setHeight(0);
+            }
+
             order_name.setText("Товар: " + orders.get(position).what);
+            order_courier.setText("Курьер: @" + orders.get(position).courier);
             order_address.setText("Адрес: " + orders.get(position).address);
             order_comment.setText(orders.get(position).comments);
+
             order_status.setText("Статус: " + orders.get(position).status);
 
             acceptButton.setOnClickListener(new View.OnClickListener() {

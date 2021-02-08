@@ -159,6 +159,11 @@ public class AllDeliverOrder extends Fragment {
             order_name.setText("Товар: " + orders.get(position).what);
             order_adress.setText("Адрес: " + orders.get(position).address);
             order_comment.setText(orders.get(position).comments);
+            acceptButton.setText("Взять заказ");
+
+            if (orders.get(position).comments.length() < 2){
+                order_comment.setHeight(0);
+            }
 
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override

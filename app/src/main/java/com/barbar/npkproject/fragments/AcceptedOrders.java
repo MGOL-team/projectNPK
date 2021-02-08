@@ -153,6 +153,11 @@ public class AcceptedOrders extends Fragment {
             order_adress.setText("Адрес: " + orders.get(position).address);
             order_comment.setText(orders.get(position).comments);
 
+            acceptButton.setText("Готово");
+            if (orders.get(position).comments.length() < 2){
+                order_comment.setHeight(0);
+            }
+
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
