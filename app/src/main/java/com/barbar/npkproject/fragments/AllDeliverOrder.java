@@ -97,7 +97,6 @@ public class AllDeliverOrder extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
 
             @Override
@@ -112,12 +111,19 @@ public class AllDeliverOrder extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Toast.makeText(getContext(), orders.size() + "", Toast.LENGTH_SHORT).show();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_deliver_order, container, false);
-
 
         listView = view.findViewById(R.id.list_view);
         adapter = new DeliverAdapter(getContext());
@@ -129,9 +135,10 @@ public class AllDeliverOrder extends Fragment {
             }
         });
 
+
+
         return view;
     }
-
 
     private class DeliverAdapter extends ArrayAdapter<Order> {
 
