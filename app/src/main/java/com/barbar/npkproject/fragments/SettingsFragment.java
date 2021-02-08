@@ -1,5 +1,6 @@
 package com.barbar.npkproject.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.barbar.npkproject.MainActivity;
 import com.barbar.npkproject.R;
+import com.barbar.npkproject.ReportActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +26,7 @@ public class SettingsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+    Button report_button;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -52,15 +56,13 @@ public class SettingsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        Button report_button = view.findViewById(R.id.bug_report);
+        report_button = view.findViewById(R.id.bug_report);
 
         report_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Fragment fragment = new ReportFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.settings_frag, fragment);
-                ft.commit();
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                startActivity(intent);
             }
         });
 
