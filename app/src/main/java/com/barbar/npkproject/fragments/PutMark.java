@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +79,8 @@ public class PutMark extends Fragment {
         ImageButton scoreButton3 = view.findViewById(R.id.star_3);
         ImageButton scoreButton4 = view.findViewById(R.id.star_4);
         ImageButton scoreButton5 = view.findViewById(R.id.star_5);
+        ImageButton button_back = view.findViewById(R.id.button_back);
+        EditText mark_key = view.findViewById(R.id.mark_key);
         Button confirmButton = view.findViewById(R.id.mark_button);
         EditText commentField = view.findViewById(R.id.text_edit);
 
@@ -94,6 +97,18 @@ public class PutMark extends Fragment {
                 toMark(comments);
             }
         });
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new MyOrders();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.my_orders, fragment);
+                ft.commit();
+            }
+        });
+
+        mark_key.setEnabled(false);
 
         return view;
     }
