@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.barbar.npkproject.MainActivity;
@@ -41,6 +42,7 @@ public class MakeOrderFragment extends Fragment {
     private EditText ET_field_address;
     private EditText ET_field_comments;
     private Button confirm_button;
+    private ImageButton button_back;
 
     MainActivity mainActivity;
 
@@ -98,7 +100,8 @@ public class MakeOrderFragment extends Fragment {
         ET_field_comments = view.findViewById(R.id.comments_field);
         ET_field_items = view.findViewById(R.id.items_field);
         confirm_button = view.findViewById(R.id.confirm_button);
-
+        button_back = view.findViewById(R.id.button_back);
+/*
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -127,7 +130,7 @@ public class MakeOrderFragment extends Fragment {
                     }
                 });
             }
-        });
+        });*/
 
 
         confirm_button.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +164,16 @@ public class MakeOrderFragment extends Fragment {
                     ft.replace(R.id.my_orders, fragment);
                     ft.commit();
                 }
+            }
+        });
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new MyOrders();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.my_orders, fragment);
+                ft.commit();
             }
         });
 
