@@ -217,7 +217,12 @@ public class MyOrders extends Fragment {
                     if (!orders.get(position).status.equals("Доставлено")) {
                         //TODO return;
                     }
-                    Fragment fragment = new PutMark(orders.get(position).courier);
+                    Fragment fragment = null;
+                    try {
+                        fragment = new PutMark(new JSONObject(orders.get(position).toString()), "customer");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.my_orders, fragment);
                     ft.commit();

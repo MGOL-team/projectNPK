@@ -156,7 +156,12 @@ public class AcceptedOrders extends Fragment {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Fragment fragment = new PutMark(orders.get(position).from_who);
+                    Fragment fragment = null;
+                    try {
+                        fragment = new PutMark(new JSONObject(orders.get(position).toString()), "courier");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.all_orders, fragment);
                     ft.commit();
