@@ -82,7 +82,10 @@ public class AllDeliverOrder extends Fragment {
                 try {
                     JSONObject object = new JSONObject(Objects.requireNonNull(snapshot.getValue(String.class)));
                     if (!object.get("login").toString().equals(login)) {
-                        orders.add(new Order(object, snapshot.getKey(), "status"));
+                        Order newOrder = new Order(object, snapshot.getKey(), "status");
+                        if (newOrder.courier.equals("")) {
+                            orders.add(newOrder);
+                        }
                     }
 
                     if (adapter != null) {
@@ -97,7 +100,6 @@ public class AllDeliverOrder extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
 
             @Override
@@ -112,12 +114,12 @@ public class AllDeliverOrder extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_deliver_order, container, false);
-
 
         listView = view.findViewById(R.id.list_view);
         adapter = new DeliverAdapter(getContext());
@@ -129,9 +131,10 @@ public class AllDeliverOrder extends Fragment {
             }
         });
 
+
+
         return view;
     }
-
 
     private class DeliverAdapter extends ArrayAdapter<Order> {
 
