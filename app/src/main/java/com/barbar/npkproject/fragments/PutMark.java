@@ -167,11 +167,11 @@ public class PutMark extends Fragment {
                 database.getReference("users").child(data.get("login").toString()).child("rating").push().setValue(object.toString());
             } else {
                 database.getReference("orders_list").child(key).removeValue();
+                database.getReference("obligations").push().setValue(data.toString());
                 database.getReference("users").child(data.get("courier").toString()).child("rating").push().setValue(object.toString());
             }
         } catch (Exception e) {
             Toast.makeText(getContext(), "" + e.toString(), Toast.LENGTH_LONG).show();
-            //Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_SHORT).show();
             return false;
         }
         changeActivity();
