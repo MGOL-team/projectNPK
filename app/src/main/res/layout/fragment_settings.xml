@@ -6,14 +6,47 @@
     android:id="@+id/settings_frag"
     tools:context=".fragments.SettingsFragment">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Сообщить об ошибке"
-        android:layout_marginBottom="15dp"
-        android:layout_marginStart="15dp"
-        android:id="@+id/bug_report"
-        android:backgroundTint="@color/sub_color"
-        android:layout_gravity="bottom"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="4"
+            android:paddingLeft="24sp"
+            android:paddingTop="12sp"
+            android:paddingRight="12sp"
+            android:text="Оплачивать заказы нужно в 419 комнате (до того, как вы не оплатите заказ, никто не сможет его принять)"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0sp"
+            android:layout_weight="4"
+            android:paddingLeft="24sp"
+            android:paddingTop="12sp"
+            android:paddingRight="12sp"
+            android:text="Когда вам доставят заказ, нажмите на кнопку завершить. Внизу высветится секретный код заказа. Не говорите этот код курьеру до того, пока он не доставит заказ"
+            android:textSize="20sp"/>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:text="Сообщить об ошибке"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="15dp"
+            android:id="@+id/bug_report"
+            android:backgroundTint="@color/sub_color"
+            android:layout_gravity="bottom"/>
+
+
+    </LinearLayout>
+
+
+
 
 </FrameLayout>
